@@ -6,6 +6,7 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
+    "commit": "cz-customizable",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "volta:install": "curl https://get.volta.sh | bash",
@@ -16,6 +17,10 @@
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "eslint": "^9.30.0",
+    "eslint-config-prettier": "^10.1.5",
+    "commitizen": "^4.3.1",
+    "cz-conventional-changelog": "^3.3.0",
+    "cz-customizable": "^7.4.0",
     "prettier": "^3.6.2",
     "turbo": "^2.5.4",
     "typescript": "5.8.3"
@@ -23,5 +28,10 @@
   "packageManager": "pnpm@10.11.0",
   "engines": {
     "node": ">=20"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.81.5",
+    "@types/axios": "^0.14.4",
+    "axios": "^1.10.0"
   }
 }
