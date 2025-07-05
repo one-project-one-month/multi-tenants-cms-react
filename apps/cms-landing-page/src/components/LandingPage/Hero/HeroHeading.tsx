@@ -24,22 +24,23 @@ export const HeroHeading = () => (
     <div className="flex flex-col sm:flex-row gap-6 justify-center mb-10">
       <Button
         size="lg"
-        className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-semibold shadow-md"
+        className="bg-blue-600 text-white hover:bg-orange-400 hover:border-orange-600 px-8 py-4 text-lg font-semibold shadow-md cursor-pointer transition-colors duration-200"
       >
         <span>Get Started Today</span>
         <ArrowRight className="h-5 w-5 ml-2" />
       </Button>
+
       <Button
         size="lg"
         variant="outline"
-        className="border-gray-300 hover:border-blue-500 hover:bg-blue-50 text-gray-800 px-8 py-4 text-lg font-semibold"
+        className="border border-gray-300 text-gray-800 hover:border-orange-500 hover:bg-orange-100 hover:text-orange-700 px-8 py-4 text-lg font-semibold cursor-pointer transition-colors duration-200"
       >
         <FileEdit className="h-5 w-5 mr-2" />
         <span>Watch Demo</span>
       </Button>
     </div>
 
-    <div className="text-sm text-gray-500 mb-16">
+    <div className="text-sm text-gray-500 mb-3">
       ✓ 14-day free trial &nbsp;&nbsp;•&nbsp;&nbsp; ✓ No setup fees &nbsp;&nbsp;•&nbsp;&nbsp; ✓
       Cancel anytime
     </div>

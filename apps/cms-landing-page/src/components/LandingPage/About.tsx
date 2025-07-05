@@ -1,7 +1,7 @@
 // components/about/AboutSection.tsx
-import { AboutHeader } from './AboutHeader';
-import { AboutFeatureCards } from './AboutFeatureCard';
-import { AboutChoice } from './AboutChoice';
+import { AboutHeader } from './About/AboutHeader';
+import { AboutFeatureCards } from './About/AboutFeatureCard';
+import { AboutChoice } from './About/AboutChoice';
 
 const About = () => (
   <section className="bg-white py-20 px-6    mx-auto  ">

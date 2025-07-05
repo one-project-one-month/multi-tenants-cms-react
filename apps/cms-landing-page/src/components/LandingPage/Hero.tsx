@@ -1,6 +1,6 @@
 // components/Hero.tsx
-import { HeroHeading } from './HeroHeading';
-import { HeroFeatureList } from './HeroFeatureList';
+import { HeroHeading } from './Hero/HeroHeading';
+import { HeroFeatureList } from './Hero/HeroFeatureList';
 
 const Hero = () => {
   return (

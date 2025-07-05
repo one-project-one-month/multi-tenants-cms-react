@@ -36,7 +36,7 @@ const features = [
 ];
 
 export const HeroFeatureList = () => (
-  <div className="mt-20 grid md:grid-cols-3 gap-8">
+  <div className="mt-10 grid md:grid-cols-3 gap-8">
     {features.map((feature, idx) => (
       <HeroFeatureCard key={idx} {...feature} icon={feature.icon} />
     ))}
