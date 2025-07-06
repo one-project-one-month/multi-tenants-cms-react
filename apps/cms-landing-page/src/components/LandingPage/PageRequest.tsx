@@ -1,13 +1,7 @@
-import { useNavigate } from "react-router"
+import { Link } from "react-router"
 import { ArrowUpRight, Sparkles, Zap, Clock, CheckCircle } from "lucide-react"
 
 export default function PageRequest() {
-  const navigate = useNavigate()
-
-  const handleRequestPage = () => {
-    navigate("/page-request")
-  }
-
   return (
     <section className="relative py-24 px-4 overflow-hidden bg-white">
       <div className="absolute inset-0 bg-gradient-to-br from-purple-50/30 via-transparent to-blue-50/30"></div>
@@ -57,13 +51,13 @@ export default function PageRequest() {
 
             {/* CTA Button */}
             <div className="pt-4">
-              <button
-                onClick={handleRequestPage}
+              <Link
+                to="/page-request"
                 className="group relative inline-flex items-center gap-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-2xl font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/25 cursor-pointer hover:bg-purple-700 hover:to-pink-700"
               >
                 <span>Start Your Project</span>
                 <ArrowUpRight className="w-5 h-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-              </button>
+              </Link>
 
               <div className="flex items-center gap-2 mt-4 text-sm text-gray-500">
                 <CheckCircle className="w-4 h-4 text-green-500" />

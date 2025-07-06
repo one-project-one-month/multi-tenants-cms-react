@@ -1,29 +1,24 @@
 import type React from "react"
 
-import { useNavigate } from "react-router"
+import { Link } from "react-router"
 import { ArrowLeft } from "lucide-react"
 
 export default function PageRequestForm() {
-  const navigate = useNavigate()
-
   const handleSubmit = (e: React.FormEvent) => {    
   }
 
-  const handleGoBack = () => {
-    navigate("/")
-  }
 
   return (
     <section className="min-h-screen bg-gray-50 py-8 px-4">
       <div className="max-w-2xl mx-auto">
         <div className="mb-8">
-          <button
-            onClick={handleGoBack}
+          <Link
+            to="/"
             className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4" />
             Back to Home
-          </button>
+          </Link>
         </div>
 
         <div className="bg-white rounded-lg shadow-lg p-8">
