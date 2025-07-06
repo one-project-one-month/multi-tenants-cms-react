@@ -8,6 +8,7 @@ import AuthLayout from './features/auth/components/AuthLayout';
 const LandingPage = lazy(() => import('./page/index'));
 const LoginPage = lazy(() => import('./features/auth/login'));
 const RegisterPage = lazy(() => import('./features/auth/register'));
+const PageRequestForm = lazy(() => import("./features/page-request/page-request-form"))
 
 const withSuspense = (Component: React.ComponentType) => {
   return (
@@ -50,6 +51,10 @@ export const router = createBrowserRouter([
     ],
   },
 
+  {
+    path: "/page-request",
+    element: withSuspense(PageRequestForm),
+  },
   {
     path: '/logout',
 
