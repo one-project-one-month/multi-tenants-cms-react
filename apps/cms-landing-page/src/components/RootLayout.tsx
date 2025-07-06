@@ -5,6 +5,7 @@ import Footer from './LandingPage/Footer';
 
 const RootLayout = () => {
   const { pathname } = useLocation();
+
   useEffect(() => {
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual';
