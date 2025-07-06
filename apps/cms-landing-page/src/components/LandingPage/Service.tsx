@@ -1,4 +1,4 @@
-    import { useNavigate } from 'react-router';
+    import { Link } from 'react-router';
 
     type LMS = {
     name: string;
@@ -54,44 +54,44 @@
     ];
 
     export default function Service() {
-    const navigate = useNavigate();
 
     return (
         <main className="p-10 max-w-7xl mx-auto rounded-xl ">
-        <section className="text-center mb-12">
+            <section className="text-center mb-12">
             <h2 className="text-4xl font-bold text-zinc-800 mb-2">Visit Demo Website</h2>
             <p className="text-indigo-900 text-lg">
-            Select a platform to manage and monitor learning content
+                Select a platform to manage and monitor learning content
             </p>
-        </section>
+            </section>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
             {lmsList.map((lms) => (
-            <div
-                key={lms.name}
-                role="button"
-                tabIndex={0}
-                onClick={() => navigate(lms.path)}
-                className="group cursor-pointer rounded-2xl border border-pink-700 p-6 text-left shadow-sm transition-transform transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-violet-700 bg-white text-pink-900"
-            >
-                <div className="mb-2">
-                <h3 className="text-xl font-semibold">{lms.name}</h3>
-                <span className="inline-block mt-1 text-xs font-medium bg-violet-700 text-white px-2 py-1 rounded">
-                    {lms.category}
-                </span>
-                </div>
+                <Link 
+                    key={lms.name}
+                    to={lms.path}>
 
-                <p className="text-sm mb-4 text-indigo-700">{lms.description}</p>
+                <div
+                    className="group cursor-pointer rounded-2xl border border-pink-700 p-6 text-left shadow-sm transition-transform transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-violet-700 bg-white text-pink-900"
+                >
+                    <div className="mb-2">
+                    <h3 className="text-xl font-semibold">{lms.name}</h3>
+                    <span className="inline-block mt-1 text-xs font-medium bg-violet-700 text-white px-2 py-1 rounded">
+                        {lms.category}
+                    </span>
+                    </div>
 
-                <div className="flex items-center justify-between text-sm">
-                <span className="text-violet-700">Updated: {lms.lastUpdated}</span>
-                <span className="text-violet-700 flex items-center gap-1 group-hover:translate-x-1 transition">
-                    Visit <span className="text-lg">→</span>
-                </span>
+                    <p className="text-sm mb-4 text-indigo-700">{lms.description}</p>
+
+                    <div className="flex items-center justify-between text-sm">
+                    <span className="text-violet-700">Updated: {lms.lastUpdated}</span>
+                    <span className="text-violet-700 flex items-center gap-1 group-hover:translate-x-1 transition">
+                        Visit <span className="text-lg">→</span>
+                    </span>
+                    </div>
                 </div>
-            </div>
+                </Link>
             ))}
-        </div>
+            </div>
         </main>
     );
     }
