@@ -8,6 +8,13 @@ import { Input } from '@cms/ui/components/input';
 import { Textarea } from '@cms/ui/components/textarea';
 import { Button } from '@cms/ui/components/button';
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@cms/ui/components/select';
+import {
   Form,
   FormItem,
   FormLabel,
@@ -56,7 +63,7 @@ export default function PageRequestForm() {
   };
 
   return (
-    <section className="min-h-screen bg-gray-50 py-8 px-4">
+    <section className="min-h-screen  py-8 px-4">
       <div className="max-w-2xl mx-auto">
         <div className="mb-8">
           <Link
@@ -86,15 +93,30 @@ export default function PageRequestForm() {
                   <FormItem>
                     <FormLabel>Page Type</FormLabel>
                     <FormControl>
-                      <select
+                      {/* <select
                         {...field}
-                        className="w-full h-12 border rounded-md px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-gray-900"
+                        className="w-full h-12 border rounded-md px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 "
                       >
                         <option value="">Select a page type</option>
                         <option value="1">Learning Management System</option>
                         <option value="2">E-Commerce System</option>
                         <option value="3">Point of Sales System</option>
-                      </select>
+                      </select> */}
+
+                      <Select
+                        value={field.value}
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <SelectTrigger className="w-full h-12 border rounded-md px-3 py-2 text-sm bg-white focus:ring-2 focus:ring-blue-500">
+                          <SelectValue placeholder="Select a page type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="1">Learning Management System</SelectItem>
+                          <SelectItem value="2">E-Commerce System</SelectItem>
+                          <SelectItem value="3">Point of Sales System</SelectItem>
+                        </SelectContent>
+                      </Select>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
