@@ -28,13 +28,13 @@ const features = [
 ];
 
 export const AboutFeatureCards = () => (
-  <div className="grid md:grid-cols-3 gap-6 mb-12">
+  <div className="grid md:grid-cols-3 gap-6 mb-5">
     {features.map(({ icon: Icon, title, description, borderColor, textColor }) => (
       <Card
         key={title}
         className={`border ${borderColor} rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 p-5`}
       >
-        <div className="flex items-center gap-2 text-lg font-semibold ">
+        <div className="flex items-center gap-1 text-lg font-semibold ">
           <Icon className={`h-5 w-5 ${textColor}`} />
           <span className={`${textColor}`}>{title}</span>
         </div>
