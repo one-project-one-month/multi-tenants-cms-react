@@ -72,7 +72,7 @@ export function PageRequestDeleteDialog({ open, onOpenChange, currentRow }: Prop
             <Input
               value={value}
               onChange={(e) => setValue(e.target.value)}
-              placeholder="Enter Page URL to confirm deletion."
+              placeholder="Enter Page Name to confirm deletion."
             />
           </Label>
 
