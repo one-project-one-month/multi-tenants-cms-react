@@ -36,7 +36,7 @@ importers:
         specifier: ^1.10.0
         version: 1.10.0
       framer-motion:
-        specifier: ^12.18.1
+        specifier: ^12.23.0
         version: 12.23.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       immer:
         specifier: ^10.1.1
