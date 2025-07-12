@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router';
 import { lazy, Suspense } from 'react';
 import { AuthenticatedLayout } from './components/Layout/authenticated-layout';
 import { LoginAuthForm } from './features/auth/components/LoginAuthForm';
+import LoginPage from './features/auth/components/LoginPage';
 
 const Dashboard = lazy(() => import('./features/dashboard/app'));
 const Owner = lazy(() => import('./features/owner/app'));
@@ -54,7 +55,7 @@ export const router = createBrowserRouter([
   },
   {
     path: '/login',
-    element: <LoginAuthForm />, // Login is not lazy-loaded as it's usually needed immediately
+    element: <LoginPage />, // Login is not lazy-loaded as it's usually needed immediately
   },
   {
     path: '/logout',
