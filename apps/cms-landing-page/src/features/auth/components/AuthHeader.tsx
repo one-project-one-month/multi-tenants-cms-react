@@ -15,13 +15,13 @@ const AuthHeader = () => {
             </div>
           </div>
           <div>
-            <h1 className="text-lg md:text-xl font-bold text-white">ContentFlow</h1>
-            <p className="text-xs text-gray-200 -mt-0.5">Multi-Tenant CMS</p>
+            <h1 className="text-lg md:text-xl font-bold ">ContentFlow</h1>
+            <p className="text-xs  -mt-0.5">Multi-Tenant CMS</p>
           </div>
         </div>
 
         {/* Support text */}
-        <div className="text-sm text-gray-200">
+        <div className="text-sm text-gray-500">
           <span className="cursor-pointer hover:underline">Need help?Contact support</span>
         </div>
       </div>

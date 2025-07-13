@@ -1,3 +1,4 @@
+// cms-landing-page/src/routes.tsx
 import { lazy, Suspense } from 'react';
 import { createBrowserRouter, redirect } from 'react-router';
 import RootLayout from './components/RootLayout';
@@ -6,12 +7,18 @@ import { HomeLoader } from './router/loader/data-loader';
 import { loginLoader } from './router/loader/auth-loader';
 import { LoginAction } from './router/action/auth-action';
 import Error from './page/Error';
-import AuthLayout from './features/auth/components/AuthLayout';
+
+import OnboardingStepperLayout from './features/auth/register/OnboardingLayout';
+import RegisterStepOne from './features/auth/register/register-one';
+import RegisterStepTwo from './features/auth/register/register-two';
+import VerifyEmail from './features/auth/register/email-verify';
+import PageRequestForm from './features/page-request/page-request-form'; // Import PageRequestForm
+import MfaSetup from './features/auth/register/mfaSetup';
+import MfaVerify from './features/auth/register/verify-mfa';
+import LoginOnboardingStepperLayout from './features/auth/login/LoginOnboardingLayout';
 
 const LandingPage = lazy(() => import('./page/index'));
 const LoginPage = lazy(() => import('./features/auth/login'));
-const RegisterPage = lazy(() => import('./features/auth/register'));
-const PageRequestForm = lazy(() => import('./features/page-request/page-request-form'));
 
 const withSuspense = (Component: React.ComponentType) => {
   return (
@@ -25,13 +32,11 @@ export const router = createBrowserRouter([
   {
     path: '/',
     element: <RootLayout />,
-    // loader: AuthLoader,
     errorElement: <Error />,
     children: [
       {
         index: true,
         element: withSuspense(LandingPage),
-        loader: HomeLoader,
         errorElement: <Error />,
       },
       {
@@ -39,6 +44,7 @@ export const router = createBrowserRouter([
         element: <div>About</div>,
         errorElement: <Error />,
       },
+
       {
         path: '/page-request',
         element: withSuspense(PageRequestForm),
@@ -46,32 +52,60 @@ export const router = createBrowserRouter([
       },
     ],
   },
-
   {
-    path: '/',
-    element: <AuthLayout />,
+    path: 'auth',
+    element: withSuspense(LoginOnboardingStepperLayout),
+    errorElement: <Error />,
     children: [
       {
         index: true,
-        path: 'login',
         element: withSuspense(LoginPage),
-        loader: loginLoader,
-        action: LoginAction,
-        errorElement: <Error />,
       },
       {
-        path: 'register',
-        element: <RegisterPage />,
-        loader: loginLoader,
-        errorElement: <Error />,
+        path: 'mfa',
+        element: withSuspense(MfaSetup),
+        // loader: loginLoader,
       },
     ],
   },
-
-  {},
+  {
+    path: '/onboarding',
+    element: <OnboardingStepperLayout />,
+    errorElement: <Error />,
+    children: [
+      {
+        index: true,
+        element: withSuspense(RegisterStepOne),
+      },
+      {
+        path: 'register',
+        element: withSuspense(RegisterStepOne),
+      },
+      {
+        path: 'create-account',
+        element: withSuspense(RegisterStepTwo),
+      },
+      {
+        path: 'verify-email',
+        element: withSuspense(VerifyEmail),
+        loader: loginLoader,
+      },
+      {
+        path: 'mfa-setup',
+        element: withSuspense(MfaSetup),
+      },
+      {
+        path: 'mfa-verify',
+        element: withSuspense(MfaVerify),
+      },
+      {
+        path: '*',
+        loader: () => redirect('/onboarding/register'),
+      },
+    ],
+  },
   {
     path: '/logout',
-
     loader: () => redirect('/'),
   },
 ]);

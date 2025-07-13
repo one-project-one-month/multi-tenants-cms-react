@@ -17,7 +17,7 @@ export const LoginAction = async ({ request }: ActionFunctionArgs) => {
   const credentials = Object.fromEntries(formData);
 
   try {
-    const response = await authApi.post('/login', credentials);
+    const response = await authApi.post('/auth/login', credentials);
 
     if (response.status !== 200) {
       return { error: response.data.error || 'Login Failed' };

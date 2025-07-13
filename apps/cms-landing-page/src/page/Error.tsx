@@ -20,7 +20,7 @@ function ErrorPage() {
 
   return (
     <div className="flex min-h-screen flex-col overflow-hidden">
-      <Header />
+      {/* <Header /> */}
       <main className="mx-auto w-[400px] my-32 flex flex-1 items-center justify-center">
         <Card className="w-full max-w-md text-center shadow-xl">
           <CardHeader className="flex flex-col items-center gap-4">
