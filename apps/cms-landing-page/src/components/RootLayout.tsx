@@ -14,7 +14,7 @@ const RootLayout = () => {
   }, [pathname]);
 
   return (
-    <div className="container mx-auto ">
+    <div className="container mx-auto">
       <main>
         <Header />
         <Outlet />

@@ -11,7 +11,7 @@ const navItems = [
 ];
 
 const Header = () => {
-  const [activeLink, setActiveLink] = useState('');
+  const [activeLink, setActiveLink] = useState('home');
   const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -20,13 +20,6 @@ const Header = () => {
     setMobileOpen(false);
   };
 
-  useEffect(() => {
-    if (!activeLink) return;
-    const element = document.getElementById(activeLink);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [activeLink]);
 
   return (
     <nav
@@ -34,6 +27,7 @@ const Header = () => {
         sticky top-0 w-full z-50
         bg-transparent backdrop-blur
         px-6 md:px-8 py-3
+        scroll-smooth
       "
     >
       <div className="flex justify-between items-center max-w-7xl mx-auto">

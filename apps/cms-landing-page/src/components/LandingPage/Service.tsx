@@ -56,7 +56,7 @@
     export default function Service() {
 
     return (
-        <main className="p-10 max-w-7xl mx-auto rounded-xl ">
+        <main id="services" className="p-10 max-w-7xl mx-auto rounded-xl ">
             <section className="text-center mb-12">
             <h2 className="text-4xl font-bold text-zinc-800 mb-2">Visit Demo Website</h2>
             <p className="text-indigo-900 text-lg">
