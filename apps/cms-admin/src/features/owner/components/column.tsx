@@ -3,7 +3,6 @@ import { Badge } from '@cms/ui/components/badge';
 
 import { cn } from '@cms/ui/lib/utils';
 
-import { Hash } from 'lucide-react';
 import { DataTableColumnHeader } from '@cms/ui/components/data-table-column-header';
 import type { OwnerType } from '../data/schema';
 import { DataTableRowActions } from './data-table-row-actions';
@@ -46,10 +45,6 @@ export const columns: ColumnDef<OwnerType>[] = [
           <span className="font-semibold text-base leading-tight max-w-48">
             {row.original.name}
           </span>
-          <div className="flex items-center gap-1 text-xs text-muted-foreground">
-            <Hash className="h-3 w-3" />
-            <span>ID: {row.original.id}</span>
-          </div>
         </div>
       </div>
     ),

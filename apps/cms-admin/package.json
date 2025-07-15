@@ -12,6 +12,7 @@
   "dependencies": {
     "@cms/ui": "workspace:*",
     "@cms/utils": "workspace:*",
+    "@cms/data": "workspace:*",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-top-loading-bar": "^3.0.2"
