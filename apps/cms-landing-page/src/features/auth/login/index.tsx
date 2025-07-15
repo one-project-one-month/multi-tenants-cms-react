@@ -1,9 +1,7 @@
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-
 import { Mail, Lock } from 'lucide-react';
-
 import {
   Form,
   FormControl,
@@ -43,30 +41,30 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center ">
-      <div className="w-full max-w-md mx-auto space-y-4 ">
+    <div className="flex items-center justify-center min-h-screen w-full">
+      <div className="w-full max-w-md mx-auto p-6 bg-white rounded-lg shadow-sm">
         {/* Header */}
-        <div className="text-center space-y-2">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-700">Welcome Back</h1>
-          <p className="text-sm sm:text-base text-gray-600">Sign in to your account to continue</p>
+        <div className="text-center space-y-2 mb-8">
+          <h1 className="text-2xl font-semibold text-gray-900">Welcome Back</h1>
+          <p className="text-gray-600">Sign in to your account to continue</p>
         </div>
 
         {/* Form */}
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 sm:space-y-5">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <FormField
               control={form.control}
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-sm sm:text-base font-medium text-gray-700">Email Address</FormLabel>
+                  <FormLabel className="text-sm font-medium text-gray-700">Email Address</FormLabel>
                   <FormControl>
                     <div className="relative">
-                      <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
+                      <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                       <Input
                         type="email"
                         placeholder="Enter your email"
-                        className="pl-10 h-10 sm:h-12 border-gray-100 focus:border-gray-900 focus:ring-gray-900 rounded-lg w-full text-sm sm:text-base"
+                        className="pl-10 h-12 border-gray-200 focus:border-gray-900 focus:ring-gray-900 rounded-lg"
                         {...field}
                       />
                     </div>
@@ -81,14 +79,14 @@ const LoginPage = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-sm sm:text-base font-medium text-gray-700">Password</FormLabel>
+                  <FormLabel className="text-sm font-medium text-gray-700">Password</FormLabel>
                   <FormControl>
                     <div className="relative">
-                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
+                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                       <Input
                         type="password"
                         placeholder="Enter your password"
-                        className="pl-10 h-10 sm:h-12 border-gray-100 focus:border-gray-900 focus:ring-gray-900 rounded-lg w-full text-sm sm:text-base"
+                        className="pl-10 h-12 border-gray-200 focus:border-gray-900 focus:ring-gray-900 rounded-lg"
                         {...field}
                       />
                     </div>
@@ -98,7 +96,7 @@ const LoginPage = () => {
               )}
             />
 
-            <div className="flex flex-row items-center justify-between gap-3">
+            <div className="flex items-center justify-between">
               <label className="flex items-center space-x-2">
                 <input
                   type="checkbox"
@@ -108,7 +106,7 @@ const LoginPage = () => {
               </label>
               <Button
                 variant="link"
-                className="text-xs sm:text-sm text-gray-500 hover:text-gray-700 p-0 h-auto text-start "
+                className="text-sm text-gray-500 hover:text-gray-700 p-0 h-auto"
               >
                 Forgot password?
               </Button>
@@ -116,24 +114,22 @@ const LoginPage = () => {
 
             <Button
               type="submit"
-              className="w-full h-9 sm:h-10 md:h-12 bg-gray-600 hover:bg-gray-700 text-white font-medium rounded-lg border border-white/30 shadow transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-white/50 text-sm sm:text-base"
+              className="w-full h-12 bg-slate-700 hover:bg-slate-800 text-white font-medium rounded-lg"
             >
               Sign In
             </Button>
           </form>
         </Form>
 
-        {/* Switch to Register */}
-        <div className="text-center border-t border-gray-100">
+        <div className="text-center mt-6 pt-6 border-t border-gray-100">
           <p className="text-sm text-gray-600">
             Don't have an account?{' '}
             <Button
               asChild
-              type="button"
               variant="link"
-              className="text-gray-700 font-medium cursor-pointer hover:text-gray-800 p-0 h-auto text-sm sm:text-base"
+              className="text-slate-700 hover:text-slate-800 font-medium p-0 h-auto"
             >
-              <Link to="/register">Create one here</Link>
+              <Link to="/onboarding/register">Create one here</Link>
             </Button>
           </p>
         </div>

@@ -70,11 +70,11 @@ const RegisterPage = () => {
   };
 
   const validateStep2AndSubmit = async () => {
-  const result = await form.trigger(['password', 'confirmPassword']);
-  if (result) {
-    onSubmit(form.getValues());
-  }
-};
+    const result = await form.trigger(['password', 'confirmPassword']);
+    if (result) {
+      onSubmit(form.getValues());
+    }
+  };
 
   const onSubmit = (data: RegisterFormData) => {
     console.log('Register Form Data:', data);
@@ -82,10 +82,12 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 w-full  ">
       <div className="text-center space-y-2">
         <h1 className="text-2xl sm:text-3xl font-bold text-gray-700">Create Account</h1>
-        <p className="text-gray-600 text-sm md:text-base">Join us and start managing your content</p>
+        <p className="text-gray-600 text-sm md:text-base">
+          Join us and start managing your content
+        </p>
       </div>
 
       <Form {...form}>
@@ -119,7 +121,9 @@ const RegisterPage = () => {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-sm font-medium text-gray-700">Email Address</FormLabel>
+                    <FormLabel className="text-sm font-medium text-gray-700">
+                      Email Address
+                    </FormLabel>
                     <FormControl>
                       <div className="relative">
                         <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
@@ -218,23 +222,23 @@ const RegisterPage = () => {
                 </span>
               </div>
 
-                <div className="flex gap-2">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => setStep(1)}
-                    className="w-1/3  h-9 sm:h-10 md:h-11  backdrop-blur-lg hover:bg-gray-200 text-black font-lg rounded-lg border border-white/30 shadow-lg transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-white/50"
-                  >
-                    Back
-                  </Button>
-                  <Button
-                    type="submit"
-                    onClick={validateStep2AndSubmit}
-                    className="w-2/3 h-9 sm:h-10 md:h-11 bg-gray-600 backdrop-blur-sm hover:bg-gray-700 text-white font-lg rounded-lg border border-white/30 shadow transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-white/50"
-                  >
-                    Create an account
-                  </Button>
-                </div>
+              <div className="flex gap-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setStep(1)}
+                  className="w-1/3  h-9 sm:h-10 md:h-11  backdrop-blur-lg hover:bg-gray-200 text-black font-lg rounded-lg border border-white/30 shadow-lg transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-white/50"
+                >
+                  Back
+                </Button>
+                <Button
+                  type="submit"
+                  onClick={validateStep2AndSubmit}
+                  className="w-2/3 h-9 sm:h-10 md:h-11 bg-gray-600 backdrop-blur-sm hover:bg-gray-700 text-white font-lg rounded-lg border border-white/30 shadow transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-white/50"
+                >
+                  Create an account
+                </Button>
+              </div>
             </>
           )}
         </form>

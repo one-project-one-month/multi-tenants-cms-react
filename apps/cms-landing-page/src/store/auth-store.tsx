@@ -2,41 +2,94 @@ import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
-type State = {
-  name: string | null;
-  email: string | null;
-  isLoggedIn: boolean;
-};
+export interface User {
+  id: string;
+  email: string;
+  emailVerified: boolean;
+  mfaSetup: boolean;
+  onboardingComplete: boolean;
+  roles: string[];
+}
 
-const initialState: State = {
-  name: null,
-  email: null,
-  isLoggedIn: false,
-};
+interface AuthState {
+  isAuthenticated: boolean;
+  user: User | null;
+}
 
 type Actions = {
-  setAuth: (name: string, email: string) => void;
-  clearAuth: () => void;
+  setIsAuthenticated: (status: boolean) => void;
+  setUser: (user: User | null) => void;
+  updateOnboardingStatus: (status: boolean) => void;
+  updateMfaStatus: (status: boolean) => void;
+  updateEmailVerifiedStatus: (status: boolean) => void;
+  resetAuth: () => void;
 };
 
-const useAuthStore = create<State & Actions>()(
+type AuthStore = AuthState & Actions;
+
+const initialState: AuthState = {
+  isAuthenticated: false,
+  user: null,
+};
+
+const useAuthStore = create<AuthStore>()(
   persist(
     immer((set) => ({
       ...initialState,
 
-      setAuth: (name: string, email: string) => {
+      setIsAuthenticated: (status: boolean) => {
         set((state) => {
-          state.name = name;
-          state.email = email;
-          state.isLoggedIn = true;
+          state.isAuthenticated = status;
         });
       },
 
-      clearAuth: () => set(initialState),
+      setUser: (user: User | null) => {
+        set((state) => {
+          state.user = user;
+          state.isAuthenticated = user !== null;
+        });
+      },
+
+      updateOnboardingStatus: (status: boolean) => {
+        set((state) => {
+          if (state.user) {
+            state.user.onboardingComplete = status;
+          }
+        });
+      },
+
+      updateMfaStatus: (status: boolean) => {
+        set((state) => {
+          if (state.user) {
+            state.user.mfaSetup = status;
+          }
+        });
+      },
+
+      updateEmailVerifiedStatus: (status: boolean) => {
+        set((state) => {
+          if (state.user) {
+            state.user.emailVerified = status;
+          }
+        });
+      },
+
+      resetAuth: () => {
+        set(() => {
+          // Reset the state to its initial values
+          localStorage.removeItem('authToken'); // Clear token from storage as well
+          return initialState;
+        });
+      },
     })),
     {
       name: 'auth-credentials',
       storage: createJSONStorage(() => localStorage),
+
+      partialize: (state) => ({
+        isAuthenticated: state.isAuthenticated,
+        user: state.user ? { ...state.user, roles: state.user.roles } : null,
+      }),
     }
   )
 );
