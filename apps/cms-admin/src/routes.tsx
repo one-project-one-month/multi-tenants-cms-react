@@ -6,7 +6,7 @@ import { LoginAuthForm } from './features/auth/components/LoginAuthForm';
 const Dashboard = lazy(() => import('./features/dashboard/app'));
 const Owner = lazy(() => import('./features/owner/app'));
 const PageRequest = lazy(() => import('./features/page-request/app'));
-
+const PageList = lazy(()=>import('./features/page-list/app'))
 // Wrapper component for lazy loading with suspense
 const withSuspense = (Component: React.ComponentType) => (
   <Suspense fallback={<p>Loading...</p>}>
@@ -50,6 +50,10 @@ export const router = createBrowserRouter([
         path: '/report',
         element: withSuspense(PageRequest),
       },
+      {
+        path : 'page-list',
+        element : withSuspense(PageList)
+      }
     ],
   },
   {

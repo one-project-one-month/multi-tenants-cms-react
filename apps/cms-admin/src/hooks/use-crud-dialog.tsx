@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-type CrudDialogType = 'add' | 'edit' | 'delete';
+type CrudDialogType = 'add' | 'edit' | 'delete'| 'hook';
 
 interface CrudDialogState<T> {
   open: CrudDialogType | null;
