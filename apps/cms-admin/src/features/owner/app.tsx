@@ -1,3 +1,4 @@
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { Header } from '../../components/Layout/Header';
 import { Main } from '../../components/Layout/main';
 import { ProfileDropdown } from '../../components/profile-dropdown';
@@ -6,10 +7,13 @@ import { OwnerDialogs } from './actions/owner-dialog';
 import columns from './components/column';
 import { DataTable } from './components/data-table';
 import { OwnerProvider } from './context/owner-context';
-import { mockOwners } from './data/mockData';
+
+import { FetchOwnerQuery } from '@cms/data';
 
 const OwnerApp = () => {
-  const data = mockOwners;
+  const { data: ownerData } = useSuspenseQuery(FetchOwnerQuery());
+  console.log(ownerData);
+
   return (
     <OwnerProvider>
       <Header>
@@ -29,7 +33,7 @@ const OwnerApp = () => {
           </div>
 
           <div>
-            <DataTable data={data} columns={columns} />
+            <DataTable data={ownerData.data} columns={columns} />
           </div>
         </div>
       </Main>
