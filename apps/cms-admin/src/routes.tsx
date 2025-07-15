@@ -11,7 +11,11 @@ import userListing from './features/report/components/userListing';
 const Dashboard = lazy(() => import('./features/dashboard/app'));
 const Owner = lazy(() => import('./features/owner/app'));
 const PageRequest = lazy(() => import('./features/page-request/app'));
+
+const PageList = lazy(()=>import('./features/page-list/app'))
+
 const Report = lazy(() => import('./features/report/app'));
+
 
 // Wrapper component for lazy loading with suspense
 const withSuspense = (Component: React.ComponentType) => (
@@ -60,6 +64,10 @@ export const router = createBrowserRouter([
         path: '/userListing',
         element: withSuspense(userListing),
       },
+      {
+        path : 'page-list',
+        element : withSuspense(PageList)
+      }
     ],
   },
   {

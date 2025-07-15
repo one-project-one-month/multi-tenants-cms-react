@@ -7,6 +7,9 @@ import {
   IconTool,
   IconUserCog,
   IconUserShield,
+  IconList,
+  IconFileText,
+  IconLayoutList,
 } from '@tabler/icons-react';
 import type { SidebarData } from '../types';
 
@@ -35,6 +38,11 @@ export const sidebarData: SidebarData = {
           url: '/page-request',
           icon: IconGitPullRequest,
         },
+        {
+          title: 'Page List',
+          url: '/page-list',
+          icon: IconFileText,
+        },
       ],
     },
     {
@@ -59,7 +67,7 @@ export const sidebarData: SidebarData = {
         {
           title: 'Help Center',
           url: '/help-center',
-          icon: IconHelp,
+          icon: IconList,
         },
       ],
     },
