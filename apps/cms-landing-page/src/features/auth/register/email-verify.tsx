@@ -41,7 +41,6 @@ const VerifyEmail = () => {
     },
   });
 
-  // Set current step when component mounts
   useEffect(() => {
     setCurrentStep(3);
   }, [setCurrentStep]);
@@ -89,10 +88,8 @@ const VerifyEmail = () => {
   const handleResendCode = async () => {
     setResendLoading(true);
     try {
-      // Simulate API call to resend verification email
       await new Promise((resolve) => setTimeout(resolve, 1000));
       setResendCooldown(60); // 60 second cooldown
-      // You could show a success message here
     } catch (error) {
       setError('Failed to resend verification code');
     } finally {
@@ -112,14 +109,12 @@ const VerifyEmail = () => {
         <p className="text-gray-900 font-medium">{data.email}</p>
       </div>
 
-      {/* Error Alert */}
       {error && (
         <Alert className="mb-6 border-red-200 bg-red-50">
           <AlertDescription className="text-red-700">{error}</AlertDescription>
         </Alert>
       )}
 
-      {/* Form */}
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <FormField

@@ -4,3 +4,9 @@ export type CMSAuth = {
   username: string;
   role: string;
 };
+
+export type CMSMFASetup = {
+  user_id: string;
+  token_id: string;
+  code: string;
+};

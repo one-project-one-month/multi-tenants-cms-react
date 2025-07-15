@@ -8,8 +8,7 @@ import {
   Sparkles,
   ChevronRight,
 } from 'lucide-react';
-import type React from 'react';
-import { useEffect } from 'react';
+
 import { useLocation, Outlet, useNavigate } from 'react-router';
 import { Button } from '@cms/ui/components/button';
 import { Card } from '@cms/ui/components/card';
@@ -36,39 +35,26 @@ const onboardingSteps = [
     icon: Mail,
   },
   {
-    label: 'MFA Setup',
-    description: 'Set up Multi-Factor Authentication for security',
+    label: 'Two Factor Setup',
+    description: 'Set up Two Factor Authentication for security',
     path: '/onboarding/mfa-setup',
     icon: Shield,
   },
   {
-    label: 'Success',
-    description: 'Your account is ready to use',
-    path: '/onboarding/success',
+    label: 'Verify Account',
+    description: 'Verify your account with two factor',
+    path: '/onboarding/mfa-verify',
     icon: CheckCircle,
   },
 ];
 
-interface RegistrationOnboardingLayoutProps {
-  currentStep?: number;
-  setCurrentStep?: (step: number) => void;
-}
-
-const RegistrationOnboardingLayout: React.FC<RegistrationOnboardingLayoutProps> = ({
-  currentStep = 1,
-  setCurrentStep = () => {},
-}) => {
+const RegistrationOnboardingLayout = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const currentStepData = onboardingSteps.find((step) => location.pathname === step.path);
-  const activeStepIndex = currentStepData ? onboardingSteps.indexOf(currentStepData) : 0;
-
-  useEffect(() => {
-    if (currentStepData && currentStep !== activeStepIndex + 1) {
-      setCurrentStep(activeStepIndex + 1);
-    }
-  }, [location.pathname, currentStepData, activeStepIndex, currentStep, setCurrentStep]);
+  const activeStepIndex = onboardingSteps.findIndex((step) =>
+    location.pathname.startsWith(step.path)
+  );
 
   const handleStepClick = (index: number) => {
     if (index <= activeStepIndex) {
@@ -79,10 +65,8 @@ const RegistrationOnboardingLayout: React.FC<RegistrationOnboardingLayoutProps> 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-20 to-purple-20">
       <div className="flex min-h-screen">
-        {/* Sidebar */}
         <aside className="hidden lg:flex w-110 bg-white/80 backdrop-blur-sm border-r border-slate-200/60 flex-col">
           <div className="p-8">
-            {/* Brand Header */}
             <div className="flex items-center gap-3 mb-8">
               <div className="relative">
                 <div className="bg-gradient-to-br from-slate-900 to-slate-700 p-2.5 rounded-xl shadow-lg">
@@ -103,7 +87,6 @@ const RegistrationOnboardingLayout: React.FC<RegistrationOnboardingLayoutProps> 
               <p className="text-slate-600">Follow these steps to set up your new account</p>
             </div>
 
-            {/* Progress indicator */}
             <div className="mb-8">
               <div className="flex items-center justify-between text-sm text-slate-600 mb-2">
                 <span>Progress</span>
@@ -119,20 +102,18 @@ const RegistrationOnboardingLayout: React.FC<RegistrationOnboardingLayoutProps> 
               </div>
             </div>
 
-            {/* Steps */}
             <div className="space-y-3 flex-1">
               {onboardingSteps.map((step, index) => {
                 const Icon = step.icon;
                 const isActive = index === activeStepIndex;
                 const isCompleted = index < activeStepIndex;
-                const isClickable = index <= activeStepIndex;
 
                 return (
                   <div
                     key={step.path}
                     className={cn(
                       'relative group transition-all duration-200',
-                      isClickable && 'cursor-pointer'
+                      index <= activeStepIndex && 'cursor-pointer'
                     )}
                     onClick={() => handleStepClick(index)}
                   >
@@ -142,7 +123,7 @@ const RegistrationOnboardingLayout: React.FC<RegistrationOnboardingLayoutProps> 
                         isActive && 'border-indigo-500 bg-indigo-50/50 shadow-md',
                         isCompleted && 'border-green-500 bg-green-50/50',
                         !isActive && !isCompleted && 'border-slate-200 hover:border-slate-300',
-                        isClickable && 'hover:shadow-sm'
+                        index <= activeStepIndex && 'hover:shadow-sm'
                       )}
                     >
                       <div className="flex items-start gap-3">
@@ -195,7 +176,7 @@ const RegistrationOnboardingLayout: React.FC<RegistrationOnboardingLayoutProps> 
                           </p>
                         </div>
 
-                        {isClickable && (
+                        {index <= activeStepIndex && (
                           <ChevronRight
                             className={cn(
                               'w-4 h-4 transition-all duration-200 opacity-0 group-hover:opacity-100 flex-shrink-0',
@@ -213,7 +194,6 @@ const RegistrationOnboardingLayout: React.FC<RegistrationOnboardingLayoutProps> 
             </div>
           </div>
 
-          {/* Bottom section */}
           <div className="p-8 border-t border-slate-200/60">
             <Button
               onClick={() => navigate('/auth')}
@@ -231,12 +211,10 @@ const RegistrationOnboardingLayout: React.FC<RegistrationOnboardingLayoutProps> 
           </div>
         </aside>
 
-        {/* Main content */}
         <main className="flex-1 flex flex-col relative overflow-hidden">
-          {/* Background decorations */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <div className="absolute top-20 right-20 w-72 h-72 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-full opacity-20 blur-3xl"></div>
-            <div className="absolute bottom-20 left-20 w-96 h-96 bg-gradient-to-tr from-blue-100 to-indigo-100 rounded-full opacity-15 blur-3xl"></div>
+            <div className="absolute top-20 right-20 w-72 h-72 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-full opacity-20 blur-3xl" />
+            <div className="absolute bottom-20 left-20 w-96 h-96 bg-gradient-to-tr from-blue-100 to-indigo-100 rounded-full opacity-15 blur-3xl" />
           </div>
 
           <div className="flex-1 flex items-center justify-center p-6 lg:p-12 relative z-10">
@@ -245,7 +223,6 @@ const RegistrationOnboardingLayout: React.FC<RegistrationOnboardingLayoutProps> 
             </div>
           </div>
 
-          {/* Mobile progress indicator */}
           <div className="lg:hidden p-6 bg-white/80 backdrop-blur-sm border-t border-slate-200/60">
             <div className="flex items-center justify-center gap-2 mb-4">
               {onboardingSteps.map((_, index) => (

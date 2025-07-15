@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
-import { LoginStore, RegistrationData } from './registeriation';
+import { LoginStore } from '../types/auth';
 
 interface LoginStateData {
   email: string;
@@ -28,12 +28,24 @@ export const useLoginStore = create<LoginStore>()(
         isLoading: false,
         error: null,
 
-        // Basic actions
         setCurrentStep: (step: number) => {
           set({ currentStep: step, error: null }, false, 'setCurrentStep');
         },
 
-        updateData: (newData: Partial<RegistrationData>) => {
+        clearState: () => {
+          set(
+            {
+              currentStep: 1,
+              data: initialData,
+              isLoading: false,
+              error: null,
+            },
+            false,
+            'clearState'
+          );
+        },
+
+        updateData: (newData: Partial<LoginStateData>) => {
           set(
             (state) => ({
               data: { ...state.data, ...newData },
@@ -114,7 +126,6 @@ export const useLoginStore = create<LoginStore>()(
             get().updateData({
               mfaCode: code,
               mfaEnabled: true,
-              accountCreated: true,
             });
             get().nextStep();
           } catch (error) {

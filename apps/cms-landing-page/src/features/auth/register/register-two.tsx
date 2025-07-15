@@ -69,12 +69,14 @@ const RegisterStepTwo = () => {
 
   const { isPending, mutateAsync } = useMutation({
     mutationFn: RegisterCMSAccount,
-    onSuccess: () => {
+    onSuccess: (data) => {
+      console.log(data);
       submitStepTwo({
         username: form.getValues('username'),
         role: form.getValues('role'),
         password: form.getValues('password'),
         confirmPassword: form.getValues('confirmPassword'),
+        userId: data.data.user.id,
       });
 
       const verificationCode = generateVerificationCode();
@@ -86,6 +88,7 @@ const RegisterStepTwo = () => {
 
   const onSubmit = async (formData: RegisterStepTwoData) => {
     try {
+      console.log('data', data);
       await mutateAsync({
         name: formData.username,
         role: formData.role,
@@ -105,6 +108,7 @@ const RegisterStepTwo = () => {
 
   const goBack = () => {
     prevStep(); // Update Zustand store
+
     navigate('/onboarding/register'); // Navigate to the previous route
   };
 

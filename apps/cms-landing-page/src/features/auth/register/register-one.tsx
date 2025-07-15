@@ -17,7 +17,7 @@ import { useNavigate } from 'react-router';
 import { cn } from '@cms/ui/lib/utils';
 import { useEffect } from 'react';
 import { useRegistrationStore } from '../../../store/register-store';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@cms/ui/components/card';
+import { Card, CardContent } from '@cms/ui/components/card';
 
 const registerStepOneSchema = z.object({
   name: z
@@ -46,7 +46,6 @@ const RegisterStepOne = () => {
 
   useEffect(() => {
     if (error && form.formState.isDirty) {
-      // Only clear if form has been interacted with
       setError(null);
     }
   }, [form.watch('name'), form.watch('email'), error, setError, form.formState.isDirty]);
@@ -54,7 +53,6 @@ const RegisterStepOne = () => {
   const onSubmit = async (formData: RegisterStepOneData) => {
     await submitStepOne(formData);
     if (!error && !isLoading) {
-      // Only navigate if no error and not loading
       navigate('/onboarding/create-account');
     }
   };

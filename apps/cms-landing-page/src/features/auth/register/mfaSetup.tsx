@@ -1,43 +1,41 @@
-'use client';
-
 import { useState, useEffect } from 'react';
 import { Shield, Copy, Check, Smartphone } from 'lucide-react';
 import { Button } from '@cms/ui/components/button';
 import { Alert, AlertDescription } from '@cms/ui/components/alert';
 import { Link, useNavigate } from 'react-router';
 import { useRegistrationStore } from '../../../store/register-store';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { fetchMFAQuery } from '../../../router/loader/auth-loader';
 
 const MfaSetup = () => {
   const navigate = useNavigate();
-  const { data, isLoading, error, setCurrentStep, prevStep, updateData } = useRegistrationStore();
+  const { isLoading, error, setCurrentStep, prevStep, updateData } = useRegistrationStore();
   const [qrCodeUrl, setQrCodeUrl] = useState('');
-  const [secretKey, setSecretKey] = useState('');
   const [copied, setCopied] = useState(false);
+  const {
+    data: mfaQuery,
+    isLoading: mfaLoading,
+    error: mfaError,
+  } = useSuspenseQuery(fetchMFAQuery());
 
-  // Mock QR code and secret generation
   useEffect(() => {
+    if (!mfaQuery?.data?.setup_data?.qr_code_url) return;
     setCurrentStep(4);
-
-    // Generate mock secret key
-    const mockSecret = 'JBSWY3DPEHPK3PXP';
-    setSecretKey(mockSecret);
-
-    // Generate QR code URL (using a QR code service)
-    const appName = 'ContentFlow';
-    const accountName = data.email;
-    const otpUrl = `otpauth://totp/${encodeURIComponent(appName)}:${encodeURIComponent(accountName)}?secret=${mockSecret}&issuer=${encodeURIComponent(appName)}`;
+    const otpUrl = mfaQuery.data.setup_data.qr_code_url;
     const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(otpUrl)}`;
     setQrCodeUrl(qrUrl);
+  }, [mfaQuery?.data?.setup_data?.qr_code_url, setCurrentStep]);
 
-    // Store secret in state
-    updateData({ mfaSecret: mockSecret });
-  }, [setCurrentStep, data.email, updateData]);
+  useEffect(() => {
+    if (!copied) return;
+    const timer = setTimeout(() => setCopied(false), 2000);
+    return () => clearTimeout(timer);
+  }, [copied]);
 
   const copySecret = async () => {
     try {
-      await navigator.clipboard.writeText(secretKey);
+      await navigator.clipboard.writeText(mfaQuery.data.setup_data.manual_entry);
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
     } catch (err) {
       console.error('Failed to copy secret:', err);
     }
@@ -49,17 +47,27 @@ const MfaSetup = () => {
   };
 
   const continueToVerification = () => {
+    const tokenId = mfaQuery?.data?.setup_data?.token_id;
+    if (!tokenId) return;
+    updateData({ mfaTokenID: tokenId });
     navigate('/onboarding/mfa-verify');
   };
 
   const skipMfa = () => {
-    updateData({ mfaEnabled: false });
+    updateData({ mfaEnabled: false, mfaTokenID: '' });
     navigate('/onboarding/success');
   };
 
+  if (mfaLoading) return <p className="text-center text-sm text-gray-600">Loading MFA setup...</p>;
+  if (mfaError)
+    return (
+      <Alert>
+        <AlertDescription>Failed to load MFA setup</AlertDescription>
+      </Alert>
+    );
+
   return (
     <div className="w-full max-w-md mx-auto">
-      {/* Header */}
       <div className="text-center mb-8">
         <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
           <Shield className="w-8 h-8 text-green-600" />
@@ -68,7 +76,6 @@ const MfaSetup = () => {
         <p className="text-gray-600">Secure your account with two-factor authentication</p>
       </div>
 
-      {/* Error Alert */}
       {error && (
         <Alert className="mb-6 border-red-200 bg-red-50">
           <AlertDescription className="text-red-700">{error}</AlertDescription>
@@ -76,7 +83,6 @@ const MfaSetup = () => {
       )}
 
       <div className="space-y-6">
-        {/* Step 1: Download App */}
         <div className="bg-gray-50 rounded-lg p-4">
           <div className="flex items-start gap-3">
             <div className="w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-medium flex-shrink-0 mt-0.5">
@@ -101,7 +107,6 @@ const MfaSetup = () => {
           </div>
         </div>
 
-        {/* Step 2: Scan QR Code */}
         <div className="bg-gray-50 rounded-lg p-4">
           <div className="flex items-start gap-3">
             <div className="w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-medium flex-shrink-0 mt-0.5">
@@ -112,13 +117,11 @@ const MfaSetup = () => {
               <p className="text-sm text-gray-600 mb-4">
                 Open your authenticator app and scan this QR code:
               </p>
-
-              {/* QR Code */}
               <div className="flex justify-center mb-4">
                 <div className="bg-white p-4 rounded-lg border-2 border-gray-200">
                   {qrCodeUrl ? (
                     <img
-                      src={qrCodeUrl || '/placeholder.svg'}
+                      src={qrCodeUrl}
                       alt="MFA QR Code"
                       className="w-48 h-48"
                       crossOrigin="anonymous"
@@ -130,13 +133,11 @@ const MfaSetup = () => {
                   )}
                 </div>
               </div>
-
-              {/* Manual Entry */}
               <div className="bg-white rounded-lg p-3 border">
                 <p className="text-xs text-gray-600 mb-2">Can't scan? Enter this code manually:</p>
                 <div className="flex items-center gap-2">
                   <code className="flex-1 text-sm font-mono bg-gray-100 px-2 py-1 rounded text-gray-800">
-                    {secretKey}
+                    {mfaQuery.data.setup_data.manual_entry}
                   </code>
                   <Button
                     size="sm"
@@ -156,7 +157,6 @@ const MfaSetup = () => {
           </div>
         </div>
 
-        {/* Step 3: Verify */}
         <div className="bg-gray-50 rounded-lg p-4">
           <div className="flex items-start gap-3">
             <div className="w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-medium flex-shrink-0 mt-0.5">
@@ -171,7 +171,6 @@ const MfaSetup = () => {
           </div>
         </div>
 
-        {/* Action Buttons */}
         <div className="flex gap-3">
           <Button
             type="button"
@@ -191,7 +190,6 @@ const MfaSetup = () => {
           </Button>
         </div>
 
-        {/* Skip Option */}
         <div className="text-center">
           <Button
             variant="link"

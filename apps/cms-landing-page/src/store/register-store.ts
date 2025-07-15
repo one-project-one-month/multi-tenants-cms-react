@@ -1,12 +1,14 @@
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
-import { RegistrationData, RegistrationStore } from './registeriation';
+import { RegistrationData, RegistrationStore } from '../types/auth';
 
 const initialData: RegistrationData = {
   name: '',
   email: '',
   username: '',
   password: '',
+  userId: '',
+  mfaTokenID: '',
   confirmPassword: '',
   role: '',
   verificationCode: '',
@@ -32,6 +34,19 @@ export const useRegistrationStore = create<RegistrationStore>()(
           set({ currentStep: step, error: null }, false, 'setCurrentStep');
         },
 
+        clearState: () => {
+          set(
+            {
+              currentStep: 1,
+              data: initialData,
+              isLoading: false,
+              error: null,
+            },
+            false,
+            'clearState'
+          );
+        },
+
         updateData: (newData: Partial<RegistrationData>) => {
           set(
             (state) => ({
@@ -46,7 +61,7 @@ export const useRegistrationStore = create<RegistrationStore>()(
         nextStep: () => {
           const { currentStep } = get();
           console.log(`Current Step: ${currentStep}`);
-          if (currentStep < 6) {
+          if (currentStep < 7) {
             set({ currentStep: currentStep + 1, error: null }, false, 'nextStep');
           }
         },
@@ -102,24 +117,13 @@ export const useRegistrationStore = create<RegistrationStore>()(
         submitStepTwo: async (stepData: {
           username: string;
           password: string;
+          userId: string;
           confirmPassword: string;
           role: string;
         }) => {
           set({ isLoading: true, error: null }, false, 'submitStepTwo/start');
 
           try {
-            // Simulate API call
-            await new Promise((resolve) => setTimeout(resolve, 1000));
-
-            // Mock validation
-            if (stepData.username === 'admin') {
-              throw new Error('Username already taken');
-            }
-
-            if (stepData.password !== stepData.confirmPassword) {
-              throw new Error('Passwords do not match');
-            }
-
             get().updateData(stepData);
             get().nextStep();
           } catch (error) {
@@ -158,20 +162,12 @@ export const useRegistrationStore = create<RegistrationStore>()(
           }
         },
 
-        setupMFA: async (code: string) => {
+        setupMFA: async () => {
           set({ isLoading: true, error: null }, false, 'setupMFA/start');
 
           try {
             // Simulate API call
-            await new Promise((resolve) => setTimeout(resolve, 1000));
-
-            // Mock validation
-            if (code.length !== 6) {
-              throw new Error('Invalid MFA code');
-            }
-
             get().updateData({
-              mfaCode: code,
               mfaEnabled: true,
               accountCreated: true,
             });

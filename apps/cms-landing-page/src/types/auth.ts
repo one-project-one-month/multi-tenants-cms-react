@@ -23,12 +23,13 @@ export interface RegistrationData {
   password: string;
   confirmPassword: string;
   role: string;
-
+  userId: string; // Assuming this is a typo and should be userId
   // Step 3: Email verification
   verificationCode: string;
   emailVerified: boolean;
 
   // Step 4: MFA Setup
+  mfaTokenID: string;
   mfaEnabled: boolean;
   mfaSecret: string;
   mfaCode: string;
@@ -52,12 +53,14 @@ export interface RegistrationStore {
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
   reset: () => void;
+  clearState: () => void;
 
   // API actions (for future use)
   submitStepOne: (data: { name: string; email: string }) => Promise<void>;
   submitStepTwo: (data: {
     username: string;
     password: string;
+    userId: string;
     confirmPassword: string;
     role: string;
   }) => Promise<void>;
@@ -73,13 +76,13 @@ export interface LoginStore {
 
   // Actions
   setCurrentStep: (step: number) => void;
-  updateData: (data: Partial<RegistrationData>) => void;
+  updateData: (data: Partial<LoginStateData>) => void;
   nextStep: () => void;
   prevStep: () => void;
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
   reset: () => void;
-
+  clearState: () => void;
   Login: (data: { email: string; password: string }) => Promise<void>;
 
   setupMFA: (code: string) => Promise<void>;

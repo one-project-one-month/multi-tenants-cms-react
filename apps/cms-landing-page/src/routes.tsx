@@ -3,9 +3,9 @@ import { lazy, Suspense } from 'react';
 import { createBrowserRouter, redirect } from 'react-router';
 import RootLayout from './components/RootLayout';
 import Loading from './components/Loading';
-import { HomeLoader } from './router/loader/data-loader';
-import { loginLoader } from './router/loader/auth-loader';
-import { LoginAction } from './router/action/auth-action';
+
+import { MfaLoader } from './router/loader/auth-loader';
+
 import Error from './page/Error';
 
 import OnboardingStepperLayout from './features/auth/register/OnboardingLayout';
@@ -88,11 +88,11 @@ export const router = createBrowserRouter([
       {
         path: 'verify-email',
         element: withSuspense(VerifyEmail),
-        loader: loginLoader,
       },
       {
         path: 'mfa-setup',
         element: withSuspense(MfaSetup),
+        loader: MfaLoader,
       },
       {
         path: 'mfa-verify',
