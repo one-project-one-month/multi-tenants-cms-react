@@ -12,7 +12,7 @@ const navItems = [
 ];
 
 const Header = () => {
-  const [activeLink, setActiveLink] = useState('');
+  const [activeLink, setActiveLink] = useState('home');
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
@@ -21,6 +21,7 @@ const Header = () => {
     setActiveLink(id);
     setMobileOpen(false);
   };
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -38,14 +39,17 @@ const Header = () => {
     }
   }, [activeLink]);
 
+ 
+
   return (
     <nav
-      className={cn(
-        'sticky top-0 w-full z-50 transition-all duration-300 px-6 md:px-8 py-4',
-        scrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-200/60'
-          : 'bg-transparent'
-      )}
+      className="
+        sticky top-0 w-full z-50
+        bg-transparent backdrop-blur
+        px-6 md:px-8 py-3
+        scroll-smooth
+      "
+
     >
       <div className="flex justify-between items-center max-w-7xl mx-auto">
         {/* Logo */}

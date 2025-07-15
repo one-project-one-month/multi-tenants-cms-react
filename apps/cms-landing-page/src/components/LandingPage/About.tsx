@@ -4,7 +4,7 @@ import { AboutFeatureCards } from './About/AboutFeatureCard';
 import { AboutChoice } from './About/AboutChoice';
 
 const About = () => (
-  <section className="bg-white py-20 px-6    mx-auto  ">
+  <section id="about" className="bg-white py-20 px-6    mx-auto  ">
     <AboutHeader />
     <AboutFeatureCards />
     <AboutChoice />

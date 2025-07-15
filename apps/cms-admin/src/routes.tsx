@@ -3,9 +3,19 @@ import { lazy, Suspense } from 'react';
 import { AuthenticatedLayout } from './components/Layout/authenticated-layout';
 import { LoginAuthForm } from './features/auth/components/LoginAuthForm';
 
+import LoginPage from './features/auth/components/LoginPage';
+
+import userListing from './features/report/components/userListing';
+
+
 const Dashboard = lazy(() => import('./features/dashboard/app'));
 const Owner = lazy(() => import('./features/owner/app'));
 const PageRequest = lazy(() => import('./features/page-request/app'));
+
+const PageList = lazy(()=>import('./features/page-list/app'))
+
+const Report = lazy(() => import('./features/report/app'));
+
 
 // Wrapper component for lazy loading with suspense
 const withSuspense = (Component: React.ComponentType) => (
@@ -48,13 +58,21 @@ export const router = createBrowserRouter([
       },
       {
         path: '/report',
-        element: withSuspense(PageRequest),
+        element: withSuspense(Report),
       },
+      {
+        path: '/userListing',
+        element: withSuspense(userListing),
+      },
+      {
+        path : 'page-list',
+        element : withSuspense(PageList)
+      }
     ],
   },
   {
     path: '/login',
-    element: <LoginAuthForm />, // Login is not lazy-loaded as it's usually needed immediately
+    element: <LoginPage />, // Login is not lazy-loaded as it's usually needed immediately
   },
   {
     path: '/logout',

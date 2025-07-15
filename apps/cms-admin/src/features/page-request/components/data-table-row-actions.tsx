@@ -1,6 +1,10 @@
 import { DotsHorizontalIcon } from '@radix-ui/react-icons';
 import type { Row } from '@tanstack/react-table';
-import { IconTrash } from '@tabler/icons-react';
+import { 
+  IconTrash, 
+  IconCheck, 
+  IconX, 
+  IconPencil } from '@tabler/icons-react';
 
 import {
   DropdownMenu,
@@ -38,10 +42,38 @@ export function DataTableRowActions<TData>({ row }: DataTableRowActionsProps<TDa
         <DropdownMenuItem
           onClick={() => {
             setCurrentRow(pageRequest);
+            // setOpen('edit');
+          }}
+        >
+          Approve
+          <DropdownMenuShortcut className="cursor-pointer">
+            <IconCheck size={16} />
+          </DropdownMenuShortcut>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem
+          variant="destructive"
+          onClick={() => {
+            setCurrentRow(pageRequest);
+            // setOpen('edit');
+          }}
+        >
+          Reject
+          <DropdownMenuShortcut className="cursor-pointer">
+            <IconX size={16} />
+          </DropdownMenuShortcut>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem
+          onClick={() => {
+            setCurrentRow(pageRequest);
             setOpen('edit');
           }}
         >
           Edit
+          <DropdownMenuShortcut className="cursor-pointer">
+            <IconPencil size={16} />
+          </DropdownMenuShortcut>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem

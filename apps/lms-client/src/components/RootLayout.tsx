@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Outlet, useLocation } from 'react-router';
+import { Outlet, useLocation } from 'react-router-dom';
 import Header from './LandingPage/Header';
 import Footer from './LandingPage/Footer';
 
@@ -14,7 +14,7 @@ const RootLayout = () => {
   }, [pathname]);
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto ">
       <main>
         <Header />
         <Outlet />
