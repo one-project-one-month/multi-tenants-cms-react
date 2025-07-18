@@ -5,7 +5,7 @@ import { AuthenticatedLayout } from './components/Layout/authenticated-layout';
 import LoginPage from './features/auth/components/LoginPage';
 
 import userListing from './features/report/components/userListing';
-import { OwnerLoader } from './router/loader/data-loader';
+import { OwnerLoader, PageLoader, PageRequestLoader } from './router/loader/data-loader';
 
 const Dashboard = lazy(() => import('./features/dashboard/app'));
 const Owner = lazy(() => import('./features/owner/app'));
@@ -54,6 +54,7 @@ export const router = createBrowserRouter([
       {
         path: '/page-request',
         element: withSuspense(PageRequest),
+        loader: PageRequestLoader,
       },
       {
         path: '/report',
@@ -66,6 +67,7 @@ export const router = createBrowserRouter([
       {
         path: 'page-list',
         element: withSuspense(PageList),
+        loader: PageLoader,
       },
     ],
   },

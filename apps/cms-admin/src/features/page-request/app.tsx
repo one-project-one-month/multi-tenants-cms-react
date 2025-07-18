@@ -7,9 +7,12 @@ import { DataTable } from './components/data-table';
 import columns from './components/column';
 import { PageRequestProvider } from './context/page-request-context';
 import { PageRequestDialogs } from './actions/page-request-dialog';
+import { fetchPageRequestsQuery } from '@cms/data';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 const PageRequestApp = () => {
-  const data = mockPageRequests;
+  const { data: pageRequestsList } = useSuspenseQuery(fetchPageRequestsQuery());
+  const data = pageRequestsList.data || mockPageRequests;
   return (
     <PageRequestProvider>
       <Header>

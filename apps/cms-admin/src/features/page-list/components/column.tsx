@@ -152,4 +152,4 @@ export const columns: ColumnDef<PageList>[] = [
   },
 ];
 
-export default columns 
+export default columns;
