@@ -6,6 +6,7 @@ import { LoginAuthForm } from './features/auth/components/LoginAuthForm';
 const Dashboard = lazy(() => import('./features/dashboard/app'));
 const Course = lazy(() => import('./features/course/app'));
 const Category = lazy(() => import('./features/category/app'));
+const Instructor = lazy(() => import('./features/instructor/app'));
 
 const withSuspense = (Component: React.ComponentType) => (
   <Suspense fallback={<p>Loading...</p>}>
@@ -59,6 +60,24 @@ export const router = createBrowserRouter([
           },
         ],
       },
+      {
+        path: '/instructor',
+        children: [
+          {
+            path: '',
+            index: true,
+            element: withSuspense(Instructor),
+          },
+          {
+            path: 'create',
+            element: <p>New Instructor</p>,
+          },
+          {
+            path: ':id/edit',
+            element: <p>Edit Instructor</p>,
+          },
+        ],
+      },      
     ],
   },
   {
