@@ -12,7 +12,10 @@ import {
 } from '@cms/ui/components/form';
 import { Button } from '@cms/ui/components/button';
 import { Input } from '@cms/ui/components/input';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
+import { useMutation } from '@tanstack/react-query';
+import { LoginCMSAccount } from '@cms/data';
+import { useLoginStore } from '../../../store/login-store';
 
 const loginSchema = z.object({
   email: z
@@ -28,6 +31,8 @@ const loginSchema = z.object({
 type LoginFormData = z.infer<typeof loginSchema>;
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+  const { Login, setError } = useLoginStore();
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -36,8 +41,38 @@ const LoginPage = () => {
     },
   });
 
-  const onSubmit = (data: LoginFormData) => {
-    console.log('Login Form Data:', data);
+  const { isPending, mutateAsync } = useMutation({
+    mutationFn: LoginCMSAccount,
+    onSuccess: (data) => {
+      console.log('Login successful:', data.data.user.id);
+      Login({
+        userId: data.data.user.id,
+      });
+
+      navigate('/auth/mfa');
+    },
+    onError: (error) => {
+      console.error('Login failed:', error);
+      // Handle login error, e.g., show error message
+    },
+  });
+
+  const onSubmit = async (data: LoginFormData) => {
+    try {
+      await mutateAsync({
+        email: data.email,
+        password: data.password,
+      });
+    } catch (error: any) {
+      const message =
+        error?.response?.data?.message ||
+        error?.message ||
+        'An error occurred while creating the account';
+
+      setError(message);
+      console.log(message);
+      // Handle form submission error
+    }
   };
 
   return (
@@ -114,9 +149,10 @@ const LoginPage = () => {
 
             <Button
               type="submit"
+              disabled={isPending}
               className="w-full h-12 bg-slate-700 hover:bg-slate-800 text-white font-medium rounded-lg"
             >
-              Sign In
+              {isPending ? 'Logging in...' : 'Log In'}
             </Button>
           </form>
         </Form>
