@@ -1,5 +1,6 @@
 import { useCourse } from '../context/course-context';
 import { CourseDeleteDialog } from './course-delete-dialog';
+import { CourseStatusChangeDialog } from './course-status-change-dialog';
 
 export function CourseDialogs() {
   const { open, setOpen, currentRow, setCurrentRow } = useCourse(); 
@@ -25,17 +26,18 @@ export function CourseDialogs() {
             currentRow={currentRow}
           /> */}
 
-          {/* <PageStatusChangeDialog
-            key={`page-status-change-${currentRow.id}`}
-            open={open === 'status-select'}
+          <CourseStatusChangeDialog
+            key={`course-status-change-${currentRow.id}`}
+            open={open === 'change-status'}
             onOpenChange={() => {
-              setOpen('status-select');
+              setOpen('change-status');
               setTimeout(() => {
                 setCurrentRow(null);
               }, 500);
             }}
             currentRow={currentRow}
-          /> */}
+          /> 
+
           <CourseDeleteDialog
             key={`course-delete-${currentRow.id}`}
             open={open === 'delete'}

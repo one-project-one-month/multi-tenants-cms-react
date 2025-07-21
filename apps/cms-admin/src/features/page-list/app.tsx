@@ -12,9 +12,10 @@ import { fetchPagesQuery } from '@cms/data';
 import { mockPages } from './data/mockData';
 
 const PageListsApp = () => {
-  const { data: pageList } = useSuspenseQuery(fetchPagesQuery());
+  //const { data: pageList } = useSuspenseQuery(fetchPagesQuery());
 
-  const data = pageList.data || mockPages;
+  //const data = pageList.data || mockPages;
+  const data = mockPages;
   return (
     <PageListProvider>
       <Header>

@@ -46,6 +46,17 @@ export function DataTableRowActions<TData>({ row }: DataTableRowActionsProps<TDa
         <DropdownMenuSeparator />
         <DropdownMenuItem
           className="cursor-pointer"
+          onClick={() => {
+            setCurrentRow(course);
+            setOpen('change-status');
+          }}
+        >
+          Change Status
+        </DropdownMenuItem>
+        <DropdownMenuSeparator/>
+
+        <DropdownMenuItem
+          className="cursor-pointer"
           // onClick={() => {
           //   setCurrentRow(page);
           //   setOpen('status-select');
@@ -53,6 +64,8 @@ export function DataTableRowActions<TData>({ row }: DataTableRowActionsProps<TDa
         >
           Edit
         </DropdownMenuItem>
+        <DropdownMenuSeparator/>
+
         <DropdownMenuItem
           className="cursor-pointer"
           variant="destructive"
@@ -66,6 +79,7 @@ export function DataTableRowActions<TData>({ row }: DataTableRowActionsProps<TDa
             <IconTrash size={16} />
           </DropdownMenuShortcut>
         </DropdownMenuItem>
+
       </DropdownMenuContent>
     </DropdownMenu>
   );

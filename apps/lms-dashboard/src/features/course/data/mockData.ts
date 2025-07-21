@@ -6,6 +6,7 @@ export const mockCourses: Course[] = [
     category: 'Programming',
     instructor: 'Jane Doe',
     createdAt: '15 June 2025',
+    status: 'published',
   },
   {
     id: 2,
@@ -14,6 +15,7 @@ export const mockCourses: Course[] = [
     category: 'Data Science',
     instructor: 'John Smith',
     createdAt: '10 May 2025',
+    status: 'published',
   },
   {
     id: 3,
@@ -22,6 +24,7 @@ export const mockCourses: Course[] = [
     category: 'Design',
     instructor: 'Alice Johnson',
     createdAt: '01 July 2025',
+    status: 'pending',
   },
   {
     id: 4,
@@ -30,6 +33,7 @@ export const mockCourses: Course[] = [
     category: 'Marketing',
     instructor: 'Bob Lee',
     createdAt: '22 April 2025',
+    status: 'unpublish',
   },
   {
     id: 5,
@@ -38,6 +42,7 @@ export const mockCourses: Course[] = [
     category: 'Cloud Computing',
     instructor: 'Sarah Kim',
     createdAt: '01 June 2025',
+    status: 'published',
   },
   {
     id: 6,
@@ -46,6 +51,7 @@ export const mockCourses: Course[] = [
     category: 'Frontend Development',
     instructor: 'Tom Davis',
     createdAt: '18 July 2025',
+    status: 'published',
   },
   {
     id: 7,
@@ -54,6 +60,7 @@ export const mockCourses: Course[] = [
     category: 'Database',
     instructor: 'Linda Zhao',
     createdAt: '05 May 2025',
+    status: 'archived',
   },
   {
     id: 8,
@@ -62,6 +69,7 @@ export const mockCourses: Course[] = [
     category: 'Security',
     instructor: 'Mark Chan',
     createdAt: '12 March 2025',
+    status: 'unpublish',
   },
   {
     id: 9,
@@ -70,6 +78,7 @@ export const mockCourses: Course[] = [
     category: 'Project Management',
     instructor: 'Emily Watson',
     createdAt: '28 June 2025',
+    status: 'published',
   },
   {
     id: 10,
@@ -78,5 +87,15 @@ export const mockCourses: Course[] = [
     category: 'DevOps',
     instructor: 'Carlos Rivera',
     createdAt: '30 April 2025',
+    status: 'archived',
+  },
+  {
+    id: 11,
+    title: 'Machine Learning Intro',
+    description: 'Understand ML fundamentals.',
+    category: 'Artificial Intelligence',
+    instructor: 'Nina Patel',
+    createdAt: '20 July 2025',
+    status: 'pending',
   },
 ];

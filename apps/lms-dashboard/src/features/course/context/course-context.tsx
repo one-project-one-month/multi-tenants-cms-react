@@ -3,7 +3,7 @@ import React, { createContext } from 'react';
 import type { Course } from '../data/schema';
 import { useCrudDialog } from '../../../hooks/use-crud-dialog';
 
-type courseDialogType = 'add' | 'edit' | 'delete' ;
+type courseDialogType = 'add' | 'edit' | 'delete' |'change-status';
 
 interface CourseContextType {
   open: courseDialogType | null;

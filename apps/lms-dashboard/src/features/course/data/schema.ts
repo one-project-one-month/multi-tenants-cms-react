@@ -7,6 +7,7 @@ export interface Course {
   category: string;
   instructor: string;
   createdAt: string; // ISO date string
+  status : string
 }
 
 export const CourseSchema = z.object({
@@ -15,5 +16,6 @@ export const CourseSchema = z.object({
   description: z.string(),
   category: z.string(),
   instructor: z.string(),
+  status : z.string(),
   createdAt: z.string() // optionally use `.datetime()` for validation
 });
