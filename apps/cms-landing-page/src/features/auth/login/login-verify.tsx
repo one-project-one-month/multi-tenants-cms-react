@@ -22,6 +22,7 @@ import { VerifyLoginMFA } from '@cms/data';
 import { useNavigate } from 'react-router';
 import { useMutation } from '@tanstack/react-query';
 import { useLoginStore } from '../../../store/login-store';
+import useAuthStore from '../../../store/auth-store';
 
 const mfaVerifySchema = z.object({
   mfaCode: z
@@ -41,6 +42,8 @@ const LoginMFAVerify = () => {
   const error = useLoginStore((state) => state.error);
   const setError = useLoginStore((state) => state.setError);
   const vefityMfa = useLoginStore((state) => state.setupMFA);
+
+  const { setEmail } = useAuthStore();
 
   const [isVerified, setIsVerified] = useState(false);
 
@@ -80,10 +83,12 @@ const LoginMFAVerify = () => {
 
   const { isPending, mutateAsync } = useMutation({
     mutationFn: VerifyLoginMFA,
-    onSuccess: () => {
+    onSuccess: (data) => {
       vefityMfa('');
       setIsVerified(true);
       clearState();
+      setEmail(data.data.user.email);
+      navigate('/');
     },
   });
 

@@ -64,3 +64,16 @@ export const getMfaSetup = async (userId: string) => {
   const client = getApiClient();
   return (await client.post(`authentication/mfa/setup/${userId}`)).data;
 };
+
+export const fetchMe = async (email: string) => {
+  const client = getApiClient();
+  return (
+    await client.get(`authentication/me`, {
+      params: { email },
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      withCredentials: true,
+    })
+  ).data;
+};

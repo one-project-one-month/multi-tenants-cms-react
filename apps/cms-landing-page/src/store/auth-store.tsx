@@ -19,10 +19,9 @@ interface AuthState {
 type Actions = {
   setIsAuthenticated: (status: boolean) => void;
   setUser: (user: User | null) => void;
-  updateOnboardingStatus: (status: boolean) => void;
   updateMfaStatus: (status: boolean) => void;
-  updateEmailVerifiedStatus: (status: boolean) => void;
   resetAuth: () => void;
+  setEmail: (email: string) => void;
 };
 
 type AuthStore = AuthState & Actions;
@@ -43,18 +42,25 @@ const useAuthStore = create<AuthStore>()(
         });
       },
 
-      setUser: (user: User | null) => {
+      setEmail: (email: string) => {
         set((state) => {
-          state.user = user;
-          state.isAuthenticated = user !== null;
+          if (state.user) {
+            state.user.email = email;
+          }
         });
       },
 
-      updateOnboardingStatus: (status: boolean) => {
+      setUser: (user: User | null) => {
         set((state) => {
-          if (state.user) {
-            state.user.onboardingComplete = status;
-          }
+          state.user = {
+            id: user?.id || '',
+            email: user?.email || '',
+            mfaSetup: user?.mfaSetup || false,
+            onboardingComplete: user?.onboardingComplete || false,
+            roles: user?.roles || [],
+            emailVerified: user?.emailVerified || false,
+          };
+          state.isAuthenticated = user !== null;
         });
       },
 
@@ -66,17 +72,8 @@ const useAuthStore = create<AuthStore>()(
         });
       },
 
-      updateEmailVerifiedStatus: (status: boolean) => {
-        set((state) => {
-          if (state.user) {
-            state.user.emailVerified = status;
-          }
-        });
-      },
-
       resetAuth: () => {
         set(() => {
-          // Reset the state to its initial values
           localStorage.removeItem('authToken'); // Clear token from storage as well
           return initialState;
         });
