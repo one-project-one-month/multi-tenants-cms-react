@@ -7,7 +7,8 @@ import {
   IconUserCog,
   IconBook,
   IconTags,
-  IconChalkboard
+  IconChalkboard,
+  IconTable
 } from '@tabler/icons-react';
 import type { SidebarData } from '../types';
 
@@ -40,6 +41,11 @@ export const sidebarData: SidebarData = {
           title: 'Category',
           url: '/category',
           icon: IconTags,
+        },
+        {
+          title: 'Enrollment',
+          url: '/enrollment',
+          icon: IconTable,
         },
       ],
     },
