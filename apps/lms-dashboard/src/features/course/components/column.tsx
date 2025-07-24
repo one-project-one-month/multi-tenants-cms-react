@@ -162,7 +162,7 @@ export const columns: ColumnDef<Course>[] = [
                 ? 'bg-slate-200 text-slate-900'
                 : 'bg-indigo-100 text-indigo-900';
         return (
-          <div className={`px-3 py-2 rounded-sm text-sm font-medium inline-block ${bgColor}`}>
+          <div className={`px-3 py-2 rounded-sm text-xs font-medium inline-block ${bgColor}`}>
             {status.charAt(0).toUpperCase() + status.slice(1).toLowerCase()}
           </div>
         );

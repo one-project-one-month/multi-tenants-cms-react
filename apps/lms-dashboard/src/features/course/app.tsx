@@ -5,17 +5,17 @@ import { Search } from '../../components/search';
 
 import { DataTable } from './components/data-table';
 import columns from './components/column';
-//import { useSuspenseQuery } from '@tanstack/react-query';
-//import { fetchPagesQuery } from '@cms/data';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { FetchCourseQuery } from '../../../../../packages/data/src/lms-dashboard-query/query';
 import { mockCourses } from './data/mockData';
 import { CourseDialogs } from './actions/course-dialog';
 import { CourseProvider } from './context/course-context';
 
 const CourseApp = () => {
-  //const { data: pageList } = useSuspenseQuery(fetchPagesQuery());
+  const { data : courseLists } = useSuspenseQuery(FetchCourseQuery());
 
-  // const data = pageList.data || mockPages;
-  const data = mockCourses;
+  const data = courseLists.data || mockCourses;
+  //const data = mockCourses;
   return (
     <CourseProvider>
       <Header>

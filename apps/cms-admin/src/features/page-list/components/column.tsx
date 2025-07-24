@@ -146,13 +146,13 @@ export const columns: ColumnDef<PageList>[] = [
               ? 'bg-slate-200 text-slate-900'
               : 'bg-indigo-100 text-indigo-900';
       return (
-        <div className={`px-3 py-2 rounded-sm text-sm font-medium inline-block ${bgColor}`}>
+        <div className={`px-3 py-2 rounded-sm text-xs font-medium inline-block ${bgColor}`}>
           {status}
         </div>
       );
     },
 
-    size: 300,
+    size: 200,
     meta: {
       className: cn(
         'drop-shadow-[0_1px_2px_rgb(0_0_0_/_0.1)] dark:drop-shadow-[0_1px_2px_rgb(255_255_255_/_0.1)] lg:drop-shadow-none',
