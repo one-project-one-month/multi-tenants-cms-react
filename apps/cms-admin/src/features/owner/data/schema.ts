@@ -24,7 +24,7 @@ export const OwnerSchema = z.object({
   name: z.string(),
   email: z.string(),
   name_space: z.string(),
-  role: z.enum(['CMS_CUSTOMER', 'CMS_ADMIN']),
+  role: z.string(),
 });
 
 export interface OwnerCRUDType {

@@ -3,7 +3,7 @@ import { getApiClient } from '../api/index.js';
 // owners
 export const getOwners = async () => {
   const api = getApiClient();
-  return (await api.get('/owners')).data;
+  return (await api.get('/owners', {})).data;
 };
 
 export const FetchOwnerQuery = () => ({

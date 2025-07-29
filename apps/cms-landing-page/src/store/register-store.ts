@@ -188,6 +188,7 @@ export const useRegistrationStore = create<RegistrationStore>()(
         // Only persist the data and currentStep, not loading states
         partialize: (state) => ({
           currentStep: state.currentStep,
+          data: state.data,
         }),
       }
     ),

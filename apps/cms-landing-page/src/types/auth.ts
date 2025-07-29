@@ -11,6 +11,7 @@ interface LoginStateData {
   mfaSecret: string;
   mfaCode: string;
   mfaEnabled: boolean;
+  userId: string; // Added userId to match the registration data structure
 }
 
 export interface RegistrationData {
@@ -83,7 +84,7 @@ export interface LoginStore {
   setError: (error: string | null) => void;
   reset: () => void;
   clearState: () => void;
-  Login: (data: { email: string; password: string }) => Promise<void>;
+  Login: (data: { userId: string }) => Promise<void>;
 
   setupMFA: (code: string) => Promise<void>;
 }

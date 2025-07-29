@@ -127,14 +127,32 @@ export const columns: ColumnDef<PageList>[] = [
   {
     accessorKey: 'pageStatus',
     header: ({ column }) => <DataTableColumnHeader column={column} title="Page Status" />,
-    cell: ({ row }) => (
-      <div className="flex items-center gap-3">
-        <div className="flex flex-col gap-1 min-w-0">
-          <span className=" text-base leading-tight max-w-48">{row.original.pageStatus}</span>
+    cell: ({ row }) => 
+    //(
+    //   <div className="flex items-center gap-3">
+    //     <div className="flex flex-col gap-1 min-w-0">
+    //       <span className=" text-base leading-tight max-w-48">{row.original.pageStatus}</span>
+    //     </div>
+    //   </div>
+    // ),
+    {
+      const status = row.original.pageStatus;
+      const bgColor =
+        status === 'Published'
+          ? 'bg-green-100 text-green-900'
+          : status === 'Draft'
+            ? 'bg-amber-100 text-amber-900'
+            : status === 'Archived'
+              ? 'bg-slate-200 text-slate-900'
+              : 'bg-indigo-100 text-indigo-900';
+      return (
+        <div className={`px-3 py-2 rounded-sm text-xs font-medium inline-block ${bgColor}`}>
+          {status}
         </div>
-      </div>
-    ),
-    size: 300,
+      );
+    },
+
+    size: 200,
     meta: {
       className: cn(
         'drop-shadow-[0_1px_2px_rgb(0_0_0_/_0.1)] dark:drop-shadow-[0_1px_2px_rgb(255_255_255_/_0.1)] lg:drop-shadow-none',

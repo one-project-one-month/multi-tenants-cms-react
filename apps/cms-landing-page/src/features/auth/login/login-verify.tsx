@@ -17,10 +17,12 @@ import { Button } from '@cms/ui/components/button';
 import { Input } from '@cms/ui/components/input';
 import { Alert, AlertDescription } from '@cms/ui/components/alert';
 import { useEffect, useRef, useState } from 'react';
-import { useRegistrationStore } from '../../../store/register-store';
-import { MFaSetUp } from '@cms/data';
+
+import { VerifyLoginMFA } from '@cms/data';
 import { useNavigate } from 'react-router';
 import { useMutation } from '@tanstack/react-query';
+import { useLoginStore } from '../../../store/login-store';
+import useAuthStore from '../../../store/auth-store';
 
 const mfaVerifySchema = z.object({
   mfaCode: z
@@ -32,14 +34,16 @@ const mfaVerifySchema = z.object({
 
 type MfaVerifyData = z.infer<typeof mfaVerifySchema>;
 
-const MfaVerify = () => {
+const LoginMFAVerify = () => {
   const [digits, setDigits] = useState<string[]>(['', '', '', '', '', '']);
   const [focusedIndex, setFocusedIndex] = useState<number>(0);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
-  const { data, prevStep, clearState } = useRegistrationStore();
-  const error = useRegistrationStore((state) => state.error);
-  const setError = useRegistrationStore((state) => state.setError);
-  const vefityMfa = useRegistrationStore((state) => state.setupMFA);
+  const { data, prevStep, clearState } = useLoginStore();
+  const error = useLoginStore((state) => state.error);
+  const setError = useLoginStore((state) => state.setError);
+  const vefityMfa = useLoginStore((state) => state.setupMFA);
+
+  const { setEmail } = useAuthStore();
 
   const [isVerified, setIsVerified] = useState(false);
 
@@ -47,7 +51,7 @@ const MfaVerify = () => {
 
   const goBack = () => {
     prevStep();
-    navigate('/onboarding/mfa-setup');
+    navigate('/auth');
   };
 
   const form = useForm<MfaVerifyData>({
@@ -78,18 +82,20 @@ const MfaVerify = () => {
   };
 
   const { isPending, mutateAsync } = useMutation({
-    mutationFn: MFaSetUp,
-    onSuccess: () => {
+    mutationFn: VerifyLoginMFA,
+    onSuccess: (data) => {
       vefityMfa('');
       setIsVerified(true);
       clearState();
+      setEmail(data.data.user.email);
+      navigate('/');
     },
   });
 
   useEffect(() => {
     if (isVerified) {
       const timeout = setTimeout(() => {
-        navigate('/auth');
+        navigate('/');
       }, 3000);
 
       return () => clearTimeout(timeout);
@@ -100,9 +106,8 @@ const MfaVerify = () => {
     try {
       console.log('data', data);
       await mutateAsync({
-        user_id: data.userId,
+        userId: data.userId,
         code,
-        token_id: data.mfaTokenID,
       });
     } catch (error: any) {
       const message =
@@ -198,7 +203,7 @@ const MfaVerify = () => {
         <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-green-100 flex items-center justify-center">
           <Shield className="w-10 h-10 text-green-600" />
         </div>
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">Account Verified</h2>
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">Login Verified</h2>
         <p className="text-gray-600">Your account has been successfully created.</p>
         <p className="text-sm text-gray-500 mt-2">Redirecting you to login...</p>
       </div>
@@ -351,4 +356,4 @@ const MfaVerify = () => {
   );
 };
 
-export default MfaVerify;
+export default LoginMFAVerify;

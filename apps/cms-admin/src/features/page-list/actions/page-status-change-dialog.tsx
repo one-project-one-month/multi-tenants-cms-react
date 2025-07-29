@@ -32,6 +32,24 @@ const statusOptions = [
   },
 ];
 
+const statusColorMap: Record<string, { bg: string; border: string; text: string }> = {
+  published: {
+    bg: 'bg-green-100',
+    border: 'border-green-300',
+    text: 'text-green-900',
+  },
+  draft: {
+    bg: 'bg-amber-100',
+    border: 'border-amber-300',
+    text: 'text-amber-900',
+  },
+  archived: {
+    bg: 'bg-slate-100',
+    border: 'border-slate-300',
+    text: 'text-slate-800',
+  },
+};
+
 export function PageStatusChangeDialog({ open, onOpenChange, currentRow }: Props) {
   const [selectedOption, setSelectedOption] = useState<string>('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -100,7 +118,7 @@ export function PageStatusChangeDialog({ open, onOpenChange, currentRow }: Props
           <Label className="block text-sm text-gray-700 ">Status Options:</Label>
 
           <div className="space-y-3">
-            {statusOptions.map((option) => (
+            {/* {statusOptions.map((option) => (
               <label
                 key={option.value}
                 htmlFor={option.value}
@@ -129,7 +147,38 @@ export function PageStatusChangeDialog({ open, onOpenChange, currentRow }: Props
                   </p>
                 </div>
               </label>
-            ))}
+            ))} */}
+
+            {statusOptions.map((option) => {
+              const { bg, border, text } = statusColorMap[option.value];
+              const isSelected = selectedOption === option.value;
+
+              return (
+                <label
+                  key={option.value}
+                  htmlFor={option.value}
+                  className={`flex items-start border rounded-md p-4 space-x-4 cursor-pointer transition-all 
+                      ${isSelected ? `${bg} ${border}` : 'bg-white border-gray-200'}
+                      hover:border-gray-400`}
+                >
+                  <input
+                    type="radio"
+                    id={option.value}
+                    name="status"
+                    value={option.value}
+                    checked={isSelected}
+                    onChange={() => setSelectedOption(option.value)}
+                    className="mt-1 accent-gray-800"
+                  />
+                  <div>
+                    <span className={`text-sm font-medium ${isSelected ? text : 'text-gray-900'}`}>
+                      {option.label}
+                    </span>
+                    <p className="text-sm text-gray-600 mt-0.5">{option.description}</p>
+                  </div>
+                </label>
+              );
+            })}
           </div>
 
           <Alert

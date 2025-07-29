@@ -10,3 +10,13 @@ export type CMSMFASetup = {
   token_id: string;
   code: string;
 };
+
+export type CMSLogin = {
+  email: string;
+  password: string;
+};
+
+export type CMSLoginMFAVetify = {
+  userId: string;
+  code: string;
+};
