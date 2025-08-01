@@ -1,20 +1,19 @@
-//import { useSuspenseQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { Header } from '../../components/Layout/Header';
 import { Main } from '../../components/Layout/main';
 import { ProfileDropdown } from '../../components/profile-dropdown';
 import { Search } from '../../components/search';
-import { OwnerDialogs } from './actions/category-dialog';
 import columns from './components/column';
 import { DataTable } from './components/data-table';
-import { CategoryProvider } from './context/category-context';
-//import { FetchOwnerQuery } from '@lms/data';
-import { mockCategory } from './data/mockData';
+import { EnrollmentProvider } from './context/enrollment-context';
+import { mockEnrollments } from './data/mockData';
+import { FetchEnrollmentQuery } from '../../../../../packages/data/src/lms-dashboard-query/query';
 
-const CategoryApp = () => {
-  //const { data: categoryData } = useSuspenseQuery(FetchOwnerQuery());
-
+const EnrollmentApp = () => {
+  // const data = mockEnrollments;
+  const {data : enrollmentData} = useSuspenseQuery(FetchEnrollmentQuery())
   return (
-    <CategoryProvider>
+    <EnrollmentProvider>
       <Header>
         <Search />
         <div className="ml-auto flex items-center gap-4">
@@ -25,20 +24,17 @@ const CategoryApp = () => {
         <div className="mb-2 space-y-4 ">
           <div className="flex justify-between items-center space-x-4">
             <div className="space-y-2">
-              <h1 className="text-2xl font-bold tracking-tight">Category Lists</h1>
-              <p className="text-muted-foreground">Here&apos;s a list of Category</p>
+              <h1 className="text-2xl font-bold tracking-tight">Enrollment Lists</h1>
+              <p className="text-muted-foreground">Here&apos;s a list of Enrollments</p>
             </div>
-            {/* <AddCategory /> */}
           </div>
-
           <div>
-            <DataTable data={mockCategory} columns={columns} />
+            <DataTable data={enrollmentData.data} columns={columns} />
           </div>
         </div>
       </Main>
-      <OwnerDialogs />
-    </CategoryProvider>
+    </EnrollmentProvider>
   );
 };
 
-export default CategoryApp;
+export default EnrollmentApp;

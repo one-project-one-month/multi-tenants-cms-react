@@ -1,0 +1,75 @@
+# For Course Detail Page
+
+[Udemy Course Link](https://www.udemy.com/course/the-complete-guide-to-angular-2/?couponCode=MT300725G1)
+
+## CourseDetailResponse
+
+```json
+{
+  "category": {
+    "id": 1,
+    "name": "Web Development"
+  },
+  "course": {
+    "id": 1,
+    "name": "Angular - The Complete Guide (2025 Edition)",
+    "shortDescription": "Master Angular (formerly \"Angular 2\") and build awesome, reactive web apps with the successor of Angular.js",
+    "rating": {
+      "averageRating": 4.7,
+      "totalRating": 217
+    },
+    "totalEnrolledStudents": 1000,
+    "createdAt": "", 
+    "updatedAt": "",
+    "whatYouWillLearn": [
+      {
+        "id": 1,
+        "text": "Learn modern Angular, including standalone components & signals from the ground up & in great detail!"
+      },
+      {
+        "id": 2,
+        "text": "Develop modern, complex, responsive and scalable web applications with Angular"
+      }
+    ],
+    "duration": "55 hours 48 minutes",
+    "modules": [
+      {
+        "id": 1,
+        "name": "Getting Started",
+        "lessons": [
+          {
+            "id": 1,
+            "title": "Welcome To The Course!",
+            "materialType": "Video",
+            "content": "https://youtu.be/dQw4w9WgXcQ?si=hbYZgixPe-BE07AX"
+          },
+          {
+            "id": 2,
+            "title": "What Exactly is Angular?",
+            "materialType": "Video",
+            "content": "https://youtu.be/dQw4w9WgXcQ?si=hbYZgixPe-BE07AX"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      {
+        "id": 1,
+        "text": "NO prior Angular knowledge is required!"
+      },
+      {
+        "id": 2,
+        "text": "Basic JavaScript & web development knowledge is required!"
+      }
+    ],
+    "description": ".............."
+  },
+  "instructor": {
+    "id": 1,
+    "name": "Vinn",
+    "email": "vinn@gmail.com",
+    "phoneNumber": "093,209,332",
+    "totalCourses": 30,
+    "totalStudents": 1000
+  }
+}

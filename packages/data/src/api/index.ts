@@ -23,13 +23,13 @@ export const createApiClient = (baseURL: string): AxiosInstance => {
   });
 
   api.interceptors.response.use(
-    (response) => response,
-    (error) => {
-      if (typeof window !== 'undefined' && error.response?.status === 401) {
-        window.location.href = `/login?redirect=${encodeURIComponent(window.location.pathname)}`;
-      }
-      return Promise.reject(error);
-    }
+    (response) => response
+    // (error) => {
+    //   if (typeof window !== 'undefined' && error.response?.status === 401) {
+    //     window.location.href = `/login?redirect=${encodeURIComponent(window.location.pathname)}`;
+    //   }
+    //   return Promise.reject(error);
+    // }
   );
 
   return api;

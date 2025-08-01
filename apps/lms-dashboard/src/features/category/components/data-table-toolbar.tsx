@@ -1,4 +1,5 @@
 import type { Table } from '@tanstack/react-table';
+
 import { Button } from '@cms/ui/components/button';
 import { Trash } from 'lucide-react';
 

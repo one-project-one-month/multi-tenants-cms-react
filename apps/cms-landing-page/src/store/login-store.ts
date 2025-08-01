@@ -8,6 +8,7 @@ interface LoginStateData {
   mfaSecret: string;
   mfaCode: string;
   mfaEnabled: boolean;
+  userId: string;
 }
 
 const initialData: LoginStateData = {
@@ -16,6 +17,7 @@ const initialData: LoginStateData = {
   mfaSecret: '',
   mfaCode: '',
   mfaEnabled: false,
+  userId: '',
 };
 
 export const useLoginStore = create<LoginStore>()(
@@ -93,11 +95,10 @@ export const useLoginStore = create<LoginStore>()(
         },
 
         // API actions (mock implementations - replace with real API calls)
-        Login: async (data: { email: string; password: string }) => {
+        Login: async (data: { userId: string }) => {
           try {
             get().updateData({
-              email: data.email,
-              password: data.password,
+              userId: data.userId,
             });
             get().nextStep();
           } catch (error) {
@@ -140,15 +141,16 @@ export const useLoginStore = create<LoginStore>()(
         },
       }),
       {
-        name: 'registration-store',
+        name: 'login-store',
 
         partialize: (state) => ({
           currentStep: state.currentStep,
+          data: state.data,
         }),
       }
     ),
     {
-      name: 'registration-store',
+      name: 'login-store',
     }
   )
 );

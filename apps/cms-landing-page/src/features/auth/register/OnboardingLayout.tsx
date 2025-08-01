@@ -14,6 +14,8 @@ import { Button } from '@cms/ui/components/button';
 import { Card } from '@cms/ui/components/card';
 import { Badge } from '@cms/ui/components/badge';
 import { cn } from '@cms/ui/lib/utils';
+import { useQuery } from '@tanstack/react-query';
+import { FetchOwnerQuery } from '@cms/data';
 
 const onboardingSteps = [
   {
