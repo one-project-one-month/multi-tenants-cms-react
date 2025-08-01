@@ -1,4 +1,4 @@
-import { getApiClient } from "src/api"
+import { getApiClient } from "./../api/index"
 
 export const getEnrollments = async () => {
   const api = getApiClient();
