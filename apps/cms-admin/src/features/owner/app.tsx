@@ -8,8 +8,8 @@ import columns from './components/column';
 import { DataTable } from './components/data-table';
 import { OwnerProvider } from './context/owner-context';
 
-import { FetchOwnerQuery } from '@cms/data';
 
+import { FetchOwnerQuery } from '@cms/data';
 const OwnerApp = () => {
   const { data: ownerData } = useSuspenseQuery(FetchOwnerQuery());
 

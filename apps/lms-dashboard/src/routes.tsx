@@ -34,7 +34,7 @@ export const router = createBrowserRouter([
             path: '',
             index: true,
             element: withSuspense(Course),
-            loader : CourseLoader
+            // loader : CourseLoader
           },
           {
             path: 'create',

@@ -12,10 +12,11 @@ export const FetchEnrollmentQuery = () => ({
 
 export const getCourses = async () => {
   const api = getApiClient();
-  return (await api.get('/courses')).data;
+  console.log(api);
+  return (await api.get('lms/courses')).data;
 };
-
 export const FetchCourseQuery = () => ({
   queryKey: ['courses'] as const,
   queryFn: getCourses,
 });
+
