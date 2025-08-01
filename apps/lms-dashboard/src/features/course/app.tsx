@@ -10,12 +10,26 @@ import { FetchCourseQuery } from '../../../../../packages/data/src/lms-dashboard
 import { mockCourses } from './data/mockData';
 import { CourseDialogs } from './actions/course-dialog';
 import { CourseProvider } from './context/course-context';
+import { useQuery } from '@tanstack/react-query';
+import { getCourses } from '../../../../../packages/data/src/lms-dashboard-query/query';
 
 const CourseApp = () => {
-  const { data : courseLists } = useSuspenseQuery(FetchCourseQuery());
-
-  const data = courseLists.data || mockCourses;
+  //const { data : courseLists } = useSuspenseQuery(FetchCourseQuery());
+  //const data = courseLists.data || mockCourses;
   //const data = mockCourses;
+
+  // const FetchCourseQuery = () => ({
+  //   queryKey: ['courses'] as const,
+  //   queryFn: getCourses,
+  // });
+
+  const { data : queryData } = useQuery({
+    queryKey: ['courses'],
+    queryFn: getCourses,
+  });
+
+  console.log(" query data ",queryData)
+
   return (
     <CourseProvider>
       <Header>
@@ -25,6 +39,7 @@ const CourseApp = () => {
         </div>
       </Header>
       <Main>
+
         <div className="mb-2 space-y-4 ">
           <div className="flex justify-between items-center space-x-4">
             <div className="space-y-2">
@@ -34,10 +49,10 @@ const CourseApp = () => {
             {/* <AddCategory /> */}
           </div>
 
-          <div>
+          {/* <div>
             <DataTable data={data} columns={columns} />
             <CourseDialogs />
-          </div>
+          </div> */}
         </div>
       </Main>
     </CourseProvider>

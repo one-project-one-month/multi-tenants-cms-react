@@ -2,7 +2,8 @@ import { useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import Header from './LandingPage/Header';
 import Footer from './LandingPage/Footer';
-
+import HomePage from '../Pages/HomePage';
+import SubNavigation from './SubNavigation';
 const RootLayout = () => {
   const { pathname } = useLocation();
 
