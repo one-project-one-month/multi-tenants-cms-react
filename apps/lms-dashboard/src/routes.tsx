@@ -2,7 +2,7 @@ import { createBrowserRouter } from 'react-router';
 import { lazy, Suspense } from 'react';
 import { AuthenticatedLayout } from './components/Layout/authenticated-layout';
 import { LoginAuthForm } from './features/auth/components/LoginAuthForm';
-
+import { CategoryLoader } from './router/loader/data-loader';
 const Dashboard = lazy(() => import('./features/dashboard/app'));
 const Course = lazy(() => import('./features/course/app'));
 const Category = lazy(() => import('./features/category/app'));
@@ -49,6 +49,7 @@ export const router = createBrowserRouter([
             path: '',
             index: true,
             element: withSuspense(Category),
+            loader: CategoryLoader,
           },
           {
             path: 'create',
@@ -77,7 +78,7 @@ export const router = createBrowserRouter([
             element: <p>Edit Instructor</p>,
           },
         ],
-      },      
+      },
     ],
   },
   {
