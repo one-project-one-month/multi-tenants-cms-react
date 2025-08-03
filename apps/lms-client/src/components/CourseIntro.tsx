@@ -1,4 +1,4 @@
-import { Badge, Captions, Settings, WholeWord } from "lucide-react";
+import { Badge, Captions, Settings, } from "lucide-react";
 import { Star } from "lucide-react";
 import { Button } from "@cms/ui/components/button";
 const CourseIntro = () => {
