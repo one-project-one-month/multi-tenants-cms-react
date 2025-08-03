@@ -41,25 +41,5 @@ export const router = createBrowserRouter([
         
       }
     ]
-  },
-  {
-    path: '/about',
-    children: [
-      {
-        path: '',
-        index: true,
-        element: withSuspense(About),
-      },
-    ],
-  },
-  {
-    path: '/client',
-    children: [
-      {
-        path: '',
-        index: true,
-        element: withSuspense(Client),
-      },
-    ],
-  },
+  }
 ]);

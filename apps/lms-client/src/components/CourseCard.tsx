@@ -1,21 +1,30 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Star, Heart } from 'lucide-react';
 import { Button } from '@cms/ui/components/button';
 import { Badge } from '@cms/ui/components/badge';
 import { Card, CardContent } from '@cms/ui/components/card';
-import { cn } from '../../../../packages/ui/src/lib/utils';
+//import { cn } from '/lib/utils';
+import { cn } from '@cms/ui/lib/utils';
 import { useWishlistStore } from '../store/wishlistStore';
-import type { Course } from '../store/wishlistStore';
-import { useNavigate } from 'react-router';
+import type{ Category, Course, CourseData, Instructor } from '../api/types/courseData';
+import { Link, useNavigate } from 'react-router';
+import { useCourseStore } from '../store/course-store';
+
 
 interface CourseCardProps {
+  data : CourseData;
   course: Course;
+  instructor: Instructor;
+  category : Category;
   variant?: 'default' | 'compact' | 'list';
   showProgress?: boolean;
   progress?: number;
 }
 
 export default function CourseCard({
+  data,
+  instructor,
+  category,
   course,
   variant = 'default',
   showProgress,
@@ -23,12 +32,12 @@ export default function CourseCard({
 }: CourseCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlistStore();
-  const isWishlisted = isInWishlist(course.id);
+  const isWishlisted = isInWishlist(course.id.toString());
 
   const handleWishlistClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (isWishlisted) {
-      removeFromWishlist(course.id);
+      removeFromWishlist(course.id.toString());
     } else {
       addToWishlist(course);
     }
@@ -45,20 +54,28 @@ export default function CourseCard({
       />
     ));
   };
+  const price = useMemo(() => (Math.random() * (110 - 20) + 20).toFixed(2), []);
+  const level = useMemo(() => {
+    const levels = ['Beginner', 'Intermediate'];
+    return levels[Math.floor(Math.random() * levels.length)];
+  }, []);
+
+  const navigate = useNavigate();
+  const { setCourseData } = useCourseStore();
 
   if (variant === 'compact') {
     return (
-      <Card className="overflow-hidden group cursor-pointer hover:shadow-lg transition-shadow">
+      <Card className="overflow-hidden group cursor-pointer hover:shadow-lg transition-shadow pt-0">
         <div className="aspect-video relative overflow-hidden">
           <img
-            src={course.image}
-            alt={course.title}
+            src={course.imgUrl}
+            alt={course.name}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
         </div>
         <CardContent className="p-3 sm:p-4">
-          <h3 className="font-semibold text-xs sm:text-sm line-clamp-2 mb-2">{course.title}</h3>
-          <p className="text-xs text-gray-600 mb-2">{course.instructor}</p>
+          <h3 className="font-semibold text-xs sm:text-sm line-clamp-2 mb-2">{course.name}</h3>
+          <p className="text-xs text-gray-600 mb-2">{instructor.name}</p>
           {showProgress && progress !== undefined && (
             <div className="mb-2">
               <div className="flex justify-between text-xs text-gray-600 mb-1">
@@ -73,7 +90,11 @@ export default function CourseCard({
               </div>
             </div>
           )}
-          <Button size="sm" className="w-full mt-2 text-xs sm:text-sm">
+          <Button size="sm" className="w-full mt-2 text-xs sm:text-sm "
+          onClick={()=>{
+            setCourseData(data);
+            navigate(`/course-lesson`)
+          }}>
             {showProgress ? 'Continue Course' : 'Start Course'}
           </Button>
         </CardContent>
@@ -83,47 +104,51 @@ export default function CourseCard({
 
   if (variant === 'list') {
     return (
-      <Card className="overflow-hidden hover:shadow-md transition-shadow">
-        <div className="flex flex-col sm:flex-row">
-          <div className="w-full sm:w-48 h-48 sm:h-32 flex-shrink-0">
-            <img src={course.image} alt={course.title} className="w-full h-full object-cover" />
-          </div>
-          <div className="flex-1 p-3 sm:p-4">
-            <div className="flex justify-between items-start">
-              <div className="flex-1">
-                <h3 className="font-semibold text-base sm:text-lg mb-2 line-clamp-2">
-                  {course.title}
-                </h3>
-                <p className="text-gray-600 text-xs sm:text-sm mb-2 line-clamp-2">
-                  {course.description}
-                </p>
-                <p className="text-sm text-gray-600 mb-2">By {course.instructor}</p>
-                <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-xs sm:text-sm">
-                  <div className="flex items-center space-x-1">
-                    <span className="font-semibold text-yellow-600">{course.rating}</span>
-                    <div className="flex">{renderStars(course.rating)}</div>
-                    <span className="text-gray-500">({course.reviews.toLocaleString()})</span>
+        <Card className="overflow-hidden hover:shadow-md transition-shadow" 
+        onClick={()=>{
+          setCourseData(data);
+          navigate(`/course-detail`)
+        }}>
+          <div className="flex flex-col sm:flex-row">
+            <div className="w-full sm:w-48 h-48 sm:h-32 flex-shrink-0">
+              <img src={course.imgUrl} alt={course.name} className="w-full h-full object-cover" />
+            </div>
+            <div className="flex-1 p-3 sm:p-4">
+              <div className="flex justify-between items-start">
+                <div className="flex-1">
+                  <h3 className="font-semibold text-base sm:text-lg mb-2 line-clamp-2">
+                    {course.name}
+                  </h3>
+                  <p className="text-gray-600 text-xs sm:text-sm mb-2 line-clamp-2">
+                    {course.description}
+                  </p>
+                  <p className="text-sm text-gray-600 mb-2">By {instructor.name}</p>
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-xs sm:text-sm">
+                    <div className="flex items-center space-x-1">
+                      <span className="font-semibold text-yellow-600">
+                        {course.rating.averageRating}
+                      </span>
+                      <div className="flex">{renderStars(course.rating.averageRating)}</div>
+                      {/* <span className="text-gray-500">({course.reviews.toLocaleString()})</span> */}
+                    </div>
+                    <span className="text-gray-500">{course.duration}</span>
+                    {/* <Badge variant="secondary">{course.level}</Badge> */}
                   </div>
-                  <span className="text-gray-500">{course.duration}</span>
-                  <Badge variant="secondary">{course.level}</Badge>
                 </div>
-              </div>
-              <div className="text-right ml-2 sm:ml-4 mt-2 sm:mt-0">
-                <div className="text-lg sm:text-xl font-bold">${course.price}</div>
-                {course.originalPrice && (
+                <div className="text-right ml-2 sm:ml-4 mt-2 sm:mt-0">
+                  <div className="text-lg sm:text-xl font-bold">${price}</div>
+                  {/* {course.originalPrice && (
                   <div className="text-xs sm:text-sm text-gray-500 line-through">
                     ${course.originalPrice}
                   </div>
-                )}
+                )} */}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </Card>
+        </Card>
     );
   }
-
-  const navigate = useNavigate();
 
   return (
     <Card
@@ -133,8 +158,8 @@ export default function CourseCard({
     >
       <div className="aspect-video relative">
         <img
-          src={course.image}
-          alt={course.title}
+          src={course.imgUrl}
+          alt={course.name}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
         />
 
@@ -152,11 +177,11 @@ export default function CourseCard({
         </Button>
 
         {/* Highest Rated Badge */}
-        {course.isHighestRated && (
+        {/* {course.isHighestRated && (
           <Badge className="absolute top-1 left-1 sm:top-2 sm:left-2 bg-yellow-500 text-white text-xs">
             Highest Rated
           </Badge>
-        )}
+        )} */}
 
         {/* Hover Overlay */}
         <div
@@ -168,7 +193,14 @@ export default function CourseCard({
           <p className="text-white text-xs sm:text-sm text-center mb-2 sm:mb-4 line-clamp-3">
             {course.description}
           </p>
-          <Button onClick={()=>navigate(`/course-detail`)} size="sm" className="bg-purple-600 hover:bg-purple-700 text-xs sm:text-sm">
+          <Button
+            size="sm"
+            className="bg-purple-600 hover:bg-purple-700 text-xs sm:text-sm"
+            onClick={() =>{
+              setCourseData(data);
+              navigate('/course-detail')
+            }}
+          >
             Go to Course
           </Button>
         </div>
@@ -176,29 +208,25 @@ export default function CourseCard({
 
       <CardContent className="p-3 sm:p-4">
         <h3 className="font-semibold text-sm sm:text-base line-clamp-2 mb-2 group-hover:text-purple-600 transition-colors">
-          {course.title}
+          {course.name}
         </h3>
-        <p className="text-xs sm:text-sm text-gray-600 mb-2">{course.instructor}</p>
+        <p className="text-xs sm:text-sm text-gray-600 mb-2">{instructor.name}</p>
 
         <div className="flex items-center space-x-1 mb-2">
-          <span className="font-semibold text-yellow-600 text-xs sm:text-sm">{course.rating}</span>
-          <div className="flex">{renderStars(course.rating)}</div>
-          <span className="text-gray-500 text-xs sm:text-sm">
-            ({course.reviews.toLocaleString()})
+          <span className="font-semibold text-yellow-600 text-xs sm:text-sm">
+            {course.rating.averageRating}
           </span>
+          <div className="flex">{renderStars(course.rating.averageRating)}</div>
+          <span className="text-gray-500 text-xs sm:text-sm">{course.modules.length} modules</span>
         </div>
 
         <div className="flex items-center justify-between">
           <div>
-            <span className="font-bold text-sm sm:text-lg">${course.price}</span>
-            {course.originalPrice && (
-              <span className="text-xs sm:text-sm text-gray-500 line-through ml-2">
-                ${course.originalPrice}
-              </span>
-            )}
+            <span className="font-bold text-sm sm:text-lg">${price}</span>
           </div>
+
           <Badge variant="outline" className="text-xs">
-            {course.level}
+            {level}
           </Badge>
         </div>
       </CardContent>
