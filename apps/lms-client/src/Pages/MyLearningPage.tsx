@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@cms/ui/components/select';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@cms/ui/components/Tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@cms/ui/components/tabs';
 import CourseCard from '../components/CourseCard';
 import { getUserCourses } from '../api/mockData';
 import {
