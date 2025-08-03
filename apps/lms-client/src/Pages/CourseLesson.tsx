@@ -6,6 +6,8 @@ import {
   AccordionContent,
 } from '@cms/ui/components/accordion';
 import { useCourseStore } from '../store/course-store.js';
+import CourseDescription from '../components/CourseDetail.js';
+import { mockCourseDetail } from '../api/mockCourseDetail.ts';
 
 const CourseLesson = () => {
   // Select only the needed parts from video store to prevent infinite loops
@@ -16,7 +18,6 @@ const CourseLesson = () => {
   const modules = useCourseStore((state) => state.courseData?.course?.modules) || [];
 
   return (
-    
     <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 py-8 flex">
       {/* Video Player Section */}
       <section className="w-2/3 border-r border-gray-300 flex flex-col">
@@ -38,6 +39,10 @@ const CourseLesson = () => {
         {selectedVideo && (
           <h2 className="mt-4 text-2xl font-semibold text-gray-900">{selectedVideo.title}</h2>
         )}
+        <div>
+          {' '}
+          <CourseDescription data={mockCourseDetail} />
+        </div>
       </section>
 
       {/* Modules & Lessons Accordion */}
