@@ -1,21 +1,22 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import type{ Course } from '../api/types/courseData'
 
-export interface Course {
-  id: string
-  title: string
-  instructor: string
-  rating: number
-  reviews: number
-  image: string
-  price: number
-  originalPrice?: number
-  description: string
-  duration: string
-  level: string
-  category: string
-  isHighestRated?: boolean
-}
+// export interface Course {
+//   id: string
+//   title: string
+//   instructor: string
+//   rating: number
+//   reviews: number
+//   image: string
+//   price: number
+//   originalPrice?: number
+//   description: string
+//   duration: string
+//   level: string
+//   category: string
+//   isHighestRated?: boolean
+// }
 
 interface WishlistStore {
   wishlist: Course[]
