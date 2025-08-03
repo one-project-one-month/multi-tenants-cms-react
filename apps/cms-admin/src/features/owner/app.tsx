@@ -12,6 +12,7 @@ import { OwnerProvider } from './context/owner-context';
 import { FetchOwnerQuery } from '@cms/data';
 const OwnerApp = () => {
   const { data: ownerData } = useSuspenseQuery(FetchOwnerQuery());
+  console.log(ownerData)
 
   return (
     <OwnerProvider>

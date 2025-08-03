@@ -7,8 +7,8 @@ export interface OwnerType {
   role: ROLE;
   name_space: string;
   verified?: boolean;
-  request: number;
-  request_page: number;
+  numberOfPagesOwned : number;
+  numberOfRequestPages : number;
 }
 
 export interface OwnerDataType {
