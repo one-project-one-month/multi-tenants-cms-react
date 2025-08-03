@@ -20,16 +20,16 @@ export const mockCategory: CategoryType[] = [
     description: 'Test Description3',
     createdAt: '10 March 2025',
   },
-  {
-    id: '4',
-    name: 'Cloud Computing',
-    description: 'Test Description 4',
-    createdAt: '10 February 2025',
-  },
-  {
-    id: '5',
-    name: 'Frontend Development',
-    description: 'Test Description 5',
-    createdAt: '10 March 2025',
-  },
+  // {
+  //   id: '4',
+  //   name: 'Cloud Computing',
+  //   description: 'Test Description 4',
+  //   createdAt: '10 February 2025',
+  // },
+  // {
+  //   id: '5',
+  //   name: 'Frontend Development',
+  //   description: 'Test Description 5',
+  //   createdAt: '10 March 2025',
+  // },
 ];
