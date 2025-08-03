@@ -3,6 +3,7 @@ import { Card, CardContent } from '@cms/ui/components/card';
 import CourseCard from '../components/CourseCard';
 import { useNavigate } from 'react-router';
 import { getTrendingCourses1, getUserCourses } from '../api/mockData';
+import HeroSection from '../components/HeroSection';
 
 const HomePage = () => {
   const trendingCourses1 = getTrendingCourses1();
@@ -33,6 +34,7 @@ const HomePage = () => {
     <>
       <div className="min-h-screen">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <HeroSection/>
           {/* Trending Courses Section */}
           <section className="mb-12">
             <div className="flex justify-between items-center mb-6">
