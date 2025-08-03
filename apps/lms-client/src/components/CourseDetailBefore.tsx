@@ -1,8 +1,12 @@
 import React from 'react';
 import type { CourseDetailResponse } from '../api/mockDataCourse';
+import type { Course } from '../api/types/courseData';
 
-interface Props {
-  courseDetail: CourseDetailResponse;
+// interface Props {
+//   courseDetail: CourseDetailResponse; //courseData
+// }
+interface Props{
+  courseDetail : Course
 }
 
 const getCourseIncludes = (course: CourseDetailResponse['course']) => [

@@ -63,7 +63,7 @@ export const columns: ColumnDef<Course>[] = [
     cell: ({ row }) => (
       <div className="flex items-center gap-3">
         <div className="flex flex-col gap-1 min-w-0">
-          <span className="font-semibold text-base leading-tight max-w-48">
+          <span className="font-semibold text-base break-words whitespace-normal leading-tight max-w-48">
             {row.original.title}
           </span>
         </div>
@@ -85,7 +85,9 @@ export const columns: ColumnDef<Course>[] = [
       <div className="flex items-center gap-3">
         <div className="flex flex-col gap-1 min-w-0">
           <div className="flex flex-col gap-1 min-w-0">
-            <span className=" text-base leading-tight max-w-48">{row.original.description}</span>
+            <span className="text-base leading-tight break-words whitespace-normal max-w-[300px]">
+              {row.original.description}
+            </span>
           </div>
         </div>
       </div>
@@ -140,7 +142,7 @@ export const columns: ColumnDef<Course>[] = [
   {
     accessorKey: 'status',
     header: ({ column }) => <DataTableColumnHeader column={column} title="Status" />,
-    cell: ({ row }) => 
+    cell: ({ row }) =>
       // <div className="flex items-center gap-3">
       //   <div className="flex flex-col gap-1 min-w-0">
       //     <span className=" text-base leading-tight max-w-48">{row.original.status}</span>
@@ -152,7 +154,7 @@ export const columns: ColumnDef<Course>[] = [
       //   </div>
       // </div>
       {
-        const status = row.original.status; 
+        const status = row.original.status;
         const bgColor =
           status === 'published'
             ? 'bg-green-100 text-green-900'
@@ -167,7 +169,7 @@ export const columns: ColumnDef<Course>[] = [
           </div>
         );
       },
-    
+
     size: 300,
     // meta: {
     //   className: cn(

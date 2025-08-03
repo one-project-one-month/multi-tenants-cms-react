@@ -11,6 +11,7 @@ import type { Course, Module } from '../../../../packages/data/src/types/mockTyp
 import { Button } from '@cms/ui/components/button';
 
 const CourseContent = () => {
+
   const course: Course = mockCourse.course;
 
   const totalModules = course.modules.length;

@@ -10,6 +10,10 @@ import CourseDescription from '../components/CourseDetail.js';
 import { mockCourseDetail } from '../api/mockCourseDetail.ts';
 
 const CourseLesson = () => {
+
+  const {courseData} = useCourseStore();
+  console.log("mokc ",mockCourseDetail);
+  console.log(" this is ppm ", courseData)
   // Select only the needed parts from video store to prevent infinite loops
   const selectedVideo = useVideoStore((state) => state.selectedVideo);
   const setSelectedVideo = useVideoStore((state) => state.setSelectedVideo);
@@ -41,7 +45,7 @@ const CourseLesson = () => {
         )}
         <div>
           {' '}
-          <CourseDescription data={mockCourseDetail} />
+          <CourseDescription data={courseData} />
         </div>
       </section>
 
