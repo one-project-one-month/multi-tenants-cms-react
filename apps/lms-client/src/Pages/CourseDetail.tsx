@@ -6,18 +6,16 @@ import { mockCourseDetailResponse } from '../api/mockDataCourse';
 
 const CourseDetail = () => {
   return (
-    <div>
+    <div className=''>
       <div>
         <CourseIntro />
       </div>
-      <>
-        <div>
+
+      <>  
+        <div className="max-w-xl px-8 ml-80">
           <CourseDetailInfo courseDetail={mockCourseDetailResponse} />
-        </div>
-        <div className="max-w-xl mx-auto p-8">
           <CourseContent />
-        </div>
-        <InstructorSection />
+          <InstructorSection/>
       </>
     </div>
   );

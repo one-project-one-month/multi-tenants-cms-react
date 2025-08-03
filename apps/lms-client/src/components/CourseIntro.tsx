@@ -1,4 +1,4 @@
-import { Badge } from "lucide-react";
+import { Badge, Captions, Settings, } from "lucide-react";
 import { Star } from "lucide-react";
 import { Button } from "@cms/ui/components/button";
 import { useLocation, useNavigate } from "react-router";
@@ -15,6 +15,7 @@ const CourseIntro = () => {
 
    // console.log(data);
         return (
+
           <>
             <div className="max-w-7xl mx-auto bg-black text-white p-6 space-y-4">
               <h1 className="text-3xl font-bold text-white">
@@ -32,6 +33,7 @@ const CourseIntro = () => {
                 <Badge className="bg-teal-500 text-white">Bestseller</Badge>
 
                 <div className="flex items-center text-yellow-400">
+
                   <span className="font-semibold text-lg">
                     {courseData.course.rating.averageRating}
                   </span>
@@ -41,6 +43,7 @@ const CourseIntro = () => {
                   {courseData.course.totalEnrolledStudents} enrolled
                 </span>
               </div>
+
 
               <div className="flex items-center space-x-4 text-gray-400 text-sm">
                 <span>⚙️Updated at {courseData?.course.updatedAt}</span>

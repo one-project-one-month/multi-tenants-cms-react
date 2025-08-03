@@ -1,6 +1,5 @@
 
-import { Star, Mail, Phone, BookOpen, Users, StarIcon } from "lucide-react";
-import { Card } from "@cms/ui/components/card";
+import { Star, Mail, BookOpen, Users } from "lucide-react";
 import { Avatar, AvatarImage } from "@cms/ui/components/avatar";
 
 const InstructorSection = () => {
@@ -9,13 +8,12 @@ const InstructorSection = () => {
   const photoUrl = "https://randomuser.me/api/portraits/men/32.jpg";
   const name = "Maximilian Schwarzmüller";
   const email = "maximilian@example.com";
-  const phone = "+123456789";
   const coursesCount = 5;
   const studentsCount = 200;
   const rating = 4.7;
 
   return (
-    <div className=" p-6 gap-1 flex flex-col items-center">
+    <div className="py-12 gap-1 flex flex-col ">
       <div className="">
           <h2 className="text-2xl font-bold pb-5">{title}</h2>
 
