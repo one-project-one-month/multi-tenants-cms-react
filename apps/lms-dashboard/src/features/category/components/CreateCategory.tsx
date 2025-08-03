@@ -36,8 +36,8 @@ const CreateCategory = () => {
   return (
     <div className='py-3'>
     <div className="">
-      <Button onClick={()=> navigate(-1)}>
-      <ArrowLeft/>
+      <Button variant='ghost' onClick={()=> navigate(-1)}>
+       <ArrowLeft /> Back 
     </Button>
     </div>
     
