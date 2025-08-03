@@ -82,7 +82,7 @@ export const columns: ColumnDef<OwnerType>[] = [
     cell: ({ row }) => (
       <div className="flex items-center gap-3">
         <div className="flex flex-col gap-1 min-w-0">
-          <span className=" text-base leading-tight max-w-48">{row.original.request}</span>
+          <span className=" text-base leading-tight max-w-48">{row.original.numberOfPagesOwned}</span>
         </div>
       </div>
     ),
@@ -101,7 +101,7 @@ export const columns: ColumnDef<OwnerType>[] = [
     cell: ({ row }) => (
       <div className="flex items-center gap-3">
         <div className="flex flex-col gap-1 min-w-0">
-          <span className=" text-base leading-tight max-w-48">{row.original.request_page}</span>
+          <span className=" text-base leading-tight max-w-48">{row.original.numberOfRequestPages}</span>
         </div>
       </div>
     ),
