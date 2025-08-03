@@ -84,7 +84,7 @@ const CourseContent = () => {
               </div>
             </AccordionTrigger>
 
-            <AccordionContent className="divide-y">
+            <AccordionContent className="divide-y ">
               {module.lessons.map((lesson) => (
                 <div
                   key={lesson.id}
