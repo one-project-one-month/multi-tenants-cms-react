@@ -10,6 +10,7 @@ const Course = lazy(() => import('./features/course/app'));
 const Category = lazy(() => import('./features/category/app'));
 const Instructor = lazy(() => import('./features/instructor/app'));
 const Enrollment = lazy(()=> import('./features/enrollment/app'));
+const CreateCategory = lazy(() => import ('./features/category/components/CreateCategory'))
 
 const withSuspense = (Component: React.ComponentType) => (
   <Suspense fallback={<p>Loading...</p>}>
@@ -56,7 +57,7 @@ export const router = createBrowserRouter([
           },
           {
             path: 'create',
-            element: <p>New Category</p>,
+            element: withSuspense(CreateCategory),
           },
           {
             path: ':id/edit',
