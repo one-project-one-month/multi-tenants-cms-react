@@ -1,13 +1,21 @@
 import { useCourse } from '../context/course-context';
 import { CourseDeleteDialog } from './course-delete-dialog';
 import { CourseStatusChangeDialog } from './course-status-change-dialog';
+import CourseActionDialog from './course-action-dialog';
 
 export function CourseDialogs() {
   const { open, setOpen, currentRow, setCurrentRow } = useCourse(); 
+  console.log(open);
   return (
     <>
-      {/* <OwnerActionDialog
-        key="owner-add"
+      <CourseActionDialog
+        key="course-add"
+        open={open === 'add'}
+        onOpenChange={(isOpen) => setOpen(isOpen ? 'add' : null)}
+      />
+
+      {/* <CategoryActionDialog
+        key="category-add"
         open={open === 'add'}
         onOpenChange={(isOpen) => setOpen(isOpen ? 'add' : null)}
       /> */}
@@ -36,7 +44,7 @@ export function CourseDialogs() {
               }, 500);
             }}
             currentRow={currentRow}
-          /> 
+          />p
 
           <CourseDeleteDialog
             key={`course-delete-${currentRow.id}`}
