@@ -35,14 +35,14 @@ export function DataTableRowActions<TData>({ row }: DataTableRowActionsProps<TDa
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
-        <DropdownMenuItem
+        {/* <DropdownMenuItem
           onClick={() => {
             setCurrentRow(course);
             navigate(`/enrollments/courses/${course.id}`);
           }}
         >
           View Enrollment
-        </DropdownMenuItem>
+        </DropdownMenuItem> */}
         <DropdownMenuSeparator />
         <DropdownMenuItem
           className="cursor-pointer"
@@ -55,7 +55,7 @@ export function DataTableRowActions<TData>({ row }: DataTableRowActionsProps<TDa
         </DropdownMenuItem>
         <DropdownMenuSeparator/>
 
-        <DropdownMenuItem
+        {/* <DropdownMenuItem
           className="cursor-pointer"
           // onClick={() => {
           //   setCurrentRow(page);
@@ -64,7 +64,7 @@ export function DataTableRowActions<TData>({ row }: DataTableRowActionsProps<TDa
         >
           Edit
         </DropdownMenuItem>
-        <DropdownMenuSeparator/>
+        <DropdownMenuSeparator/> */}
 
         <DropdownMenuItem
           className="cursor-pointer"

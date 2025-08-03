@@ -41,6 +41,7 @@ export interface Course {
   modules: Module[];
   requirements: Requirement[];
   description: string;
+  imgUrl : string;
 }
 
 export interface Category {
