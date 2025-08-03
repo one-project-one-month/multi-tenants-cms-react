@@ -4,7 +4,7 @@ import { getApiClient } from '../api/index.js';
 export const RegisterCMSAccount = async (data: CMSAuth) => {
   const client = getApiClient();
   return (
-    await client.post('authentication/register', data, {
+    await client.post('auth/register', data, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -16,7 +16,7 @@ export const RegisterCMSAccount = async (data: CMSAuth) => {
 export const LoginCMSAccount = async (data: CMSLogin) => {
   const client = getApiClient();
   return (
-    await client.post('authentication/login', data, {
+    await client.post('auth/login', data, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -29,7 +29,7 @@ export const VerifyLoginMFA = async (data: CMSLoginMFAVetify) => {
   const client = getApiClient();
   return (
     await client.post(
-      `authentication/login/mfa/${data.userId}`,
+      `auth/mfa/login/${data.userId}`,
       { mfa_code: data.code },
       {
         headers: {
@@ -45,7 +45,7 @@ export const MFaSetUp = async (data: CMSMFASetup) => {
   const cliennt = getApiClient();
   return (
     await cliennt.post(
-      `authentication/mfa/verify/${data.user_id}`,
+      `auth/mfa/verify/${data.user_id}`,
       {
         token_id: data.token_id,
         code: data.code,
@@ -62,13 +62,13 @@ export const MFaSetUp = async (data: CMSMFASetup) => {
 
 export const getMfaSetup = async (userId: string) => {
   const client = getApiClient();
-  return (await client.post(`authentication/mfa/setup/${userId}`)).data;
+  return (await client.post(`auth/mfa/setup/${userId}`)).data;
 };
 
 export const fetchMe = async (email: string) => {
   const client = getApiClient();
   return (
-    await client.get(`authentication/me`, {
+    await client.get(`auth/me`, {
       params: { email },
       headers: {
         'Content-Type': 'application/json',

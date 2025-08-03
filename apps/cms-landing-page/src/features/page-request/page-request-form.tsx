@@ -3,7 +3,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Link } from 'react-router';
-import { ArrowLeft } from 'lucide-react';
+import { AlertCircle, ArrowLeft, CheckCircle } from 'lucide-react';
 import { Input } from '@cms/ui/components/input';
 import { Textarea } from '@cms/ui/components/textarea';
 import { Button } from '@cms/ui/components/button';
@@ -23,22 +23,32 @@ import {
   FormMessage,
 } from '@cms/ui/components/form';
 import { ImageUploader } from '@cms/ui/components/ImageUploader';
-//Validation schema for the form
+import { useMutation } from '@tanstack/react-query';
+import { createPageRequest } from '@cms/data';
+import { Alert, AlertTitle, AlertDescription } from '@cms/ui/components/alert';
+import { useState } from 'react';
+
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
+const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
 const schema = z.object({
   pageType: z.enum(['1', '2', '3'], { required_error: 'Page type is required' }),
   pageTitle: z.string().min(1, 'Page title is required'),
   pageDescription: z.string().min(1, 'Page description is required'),
   pageLink: z.string().url('Must be a valid URL'),
-  pageLogo: z
+  logo: z
     .instanceof(File, { message: 'Logo image is required' })
-    .refine((file) => file.size <= 5 * 1024 * 1024, {
-      message: 'Logo must be under 5MB',
-    }),
+    .refine((file) => file.size <= MAX_FILE_SIZE, 'Logo must be 5MB or less.')
+    .refine(
+      (file) => ACCEPTED_IMAGE_TYPES.includes(file.type),
+      '.jpg, .jpeg, .png, and .webp files are accepted.'
+    ),
 });
-// TypeScript type for the form data
+
 type PageRequestFormData = z.infer<typeof schema>;
-// PageRequestForm component
+
 export default function PageRequestForm() {
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const form = useForm<PageRequestFormData>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -46,20 +56,52 @@ export default function PageRequestForm() {
       pageTitle: '',
       pageDescription: '',
       pageLink: '',
-      pageLogo: undefined as any,
+      logo: undefined as any,
     },
   });
-  // Handle form submission
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: async (data: PageRequestFormData) => {
+      const payload = {
+        ownerId: '23009708-b06c-412a-b028-19b3a105d39e',
+        requestType: getRequestTypeString(data.pageType),
+        title: data.pageTitle,
+        description: data.pageDescription,
+        pageUrl: data.pageLink,
+        logo: data.logo,
+      };
+
+      return createPageRequest(payload);
+
+    },
+    onSuccess: (data: any) => {
+      setErrorMessage(null);
+      setSuccessMessage(data.message || 'Page request submitted successfully!');
+      form.reset();
+    },
+    onError: (error: any) => {
+      setSuccessMessage(null);
+      const message = error?.response?.data?.message || 'An unexpected error occurred. Please try again.';
+      setErrorMessage(message);
+    },
+  });
+
+  const getRequestTypeString = (pageType: '1' | '2' | '3'): string => {
+  switch (pageType) {
+    case '1':
+      return 'Learning Management System';
+    case '2':
+      return 'E-Commerce System';
+    case '3':
+      return 'Point of Sales System';
+    default:
+      return '';
+  }
+};
+
   const onSubmit = (data: PageRequestFormData) => {
-    console.log('Form submitted:', data);
-    // Reset form fields to default values
-    form.reset({
-      pageType: '1',
-      pageTitle: '',
-      pageDescription: '',
-      pageLink: '',
-      pageLogo: undefined as any,
-    });
+    setErrorMessage(null);
+    mutate(data);
   };
 
   return (
@@ -85,6 +127,20 @@ export default function PageRequestForm() {
 
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              {successMessage && (
+                <Alert variant="success">
+                  <CheckCircle className="h-4 w-4" />
+                  <AlertTitle>Success!</AlertTitle>
+                  <AlertDescription>{successMessage}</AlertDescription>
+                </Alert>
+              )}
+              {errorMessage && (
+                <Alert variant="destructive">
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertTitle>Submission Failed</AlertTitle>
+                  <AlertDescription>{errorMessage}</AlertDescription>
+                </Alert>
+              )}
               {/* Page Type */}
               <FormField
                 control={form.control}
@@ -170,7 +226,7 @@ export default function PageRequestForm() {
 
               {/* ImageUploader */}
               <Controller
-                name="pageLogo"
+                name="logo"
                 control={form.control}
                 render={({ field }) => {
                   const handleChange = (file: File | string | null) => {
@@ -190,8 +246,8 @@ export default function PageRequestForm() {
               />
 
               {/* Submit */}
-              <Button type="submit" className="w-full h-12">
-                Submit Request
+              <Button type="submit" className="w-full h-12" disabled={isPending}>
+                {isPending ? 'Submitting...' : 'Submit Request'}
               </Button>
             </form>
           </Form>
