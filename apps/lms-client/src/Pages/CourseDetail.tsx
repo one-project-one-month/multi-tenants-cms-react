@@ -16,6 +16,7 @@ const CourseDetail = () => {
           <CourseDetailInfo courseDetail={mockCourseDetailResponse} />
           <CourseContent />
           <InstructorSection/>
+        </div>
       </>
     </div>
   );
