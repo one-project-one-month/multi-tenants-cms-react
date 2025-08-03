@@ -1,6 +1,8 @@
 import CourseContent from '../components/CourseContent';
 import CourseIntro from '../components/CourseIntro';
 import InstructorSection from '../components/InstructorSection';
+import CourseDetailInfo from '../components/CourseDetailBefore';
+import { mockCourseDetailResponse } from '../api/mockDataCourse';
 
 const CourseDetail = () => {
   return (
@@ -8,12 +10,14 @@ const CourseDetail = () => {
       <div>
         <CourseIntro />
       </div>
-      <>  
-        "This is the part of content details"
+      <>
+        <div>
+          <CourseDetailInfo courseDetail={mockCourseDetailResponse} />
+        </div>
         <div className="max-w-xl mx-auto p-8">
           <CourseContent />
         </div>
-        <InstructorSection/>
+        <InstructorSection />
       </>
     </div>
   );
